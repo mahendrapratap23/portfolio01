@@ -1,6 +1,6 @@
 # Graphic Design Portfolio 
 
-Open `index.html` in a browser, or open the folder in VS Code / Cursor / Antigravity.
+Open `(https://portfolio01-three-ruby.vercel.app/)` in a browser, or open the folder in VS Code / Cursor / Antigravity.
 
 ## Replace first
 - `hello@example.com`
