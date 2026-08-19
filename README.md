@@ -1,4 +1,4 @@
-# Graphic Design Portfolio — IDE Starter
+# Graphic Design Portfolio 
 
 Open `index.html` in a browser, or open the folder in VS Code / Cursor / Antigravity.
 
