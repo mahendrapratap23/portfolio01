@@ -386,36 +386,153 @@ body {
 }
 
 .media-four {
-    background: #ff7448;
-    min-height: 72vh
+    background: #ff5c35;
+    min-height: 72vh;
+    position: relative;
+    overflow: hidden;
 }
 
-.product-card {
-    background: #e9e1cf;
-    color: #111;
-    width: min(380px, 65%);
-    aspect-ratio: .7;
-    padding: 35px;
+.memora-card {
+    background: #111215;
+    color: #f2f0ea;
+    width: min(440px, 75%);
+    aspect-ratio: 4/5;
+    padding: 36px;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 18px 18px 0 rgba(0, 0, 0, .18);
-    transition: .7s
+    box-shadow: 24px 24px 0 rgba(0, 0, 0, .22);
+    border: 1px solid rgba(255, 255, 255, .1);
+    transform: rotate(-3deg);
+    transition: transform .7s cubic-bezier(.16, 1, .3, 1), box-shadow .7s ease;
 }
 
-.product-card small,
-.product-card span {
-    font: 10px "DM Mono"
+.project:hover .memora-card {
+    transform: rotate(0) translateY(-14px) scale(1.03);
+    box-shadow: 32px 32px 0 rgba(0, 0, 0, .28);
 }
 
-.product-card strong {
-    font-size: 45px;
-    line-height: .82;
-    letter-spacing: -.07em
+.memora-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+    padding-bottom: 14px;
 }
 
-.project:hover .product-card {
-    transform: translateY(-18px) rotate(3deg)
+.memora-tag {
+    font: 10px "DM Mono";
+    letter-spacing: .1em;
+    color: #a0a0a5;
+    text-transform: uppercase;
+}
+
+.memora-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font: 10px "DM Mono";
+    color: #00ff88;
+    letter-spacing: .06em;
+    background: rgba(0, 255, 136, .12);
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 255, 136, .3);
+}
+
+.pulse-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00ff88;
+    animation: blinkDot 1.4s infinite ease-in-out;
+}
+
+@keyframes blinkDot {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: .3;
+        transform: scale(.7);
+    }
+}
+
+.memora-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.memora-prompt {
+    font: 12px "DM Mono";
+    color: #ff7448;
+    letter-spacing: .04em;
+    opacity: .95;
+}
+
+.memora-title {
+    font-size: clamp(52px, 8vw, 105px);
+    line-height: .78;
+    letter-spacing: -.08em;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+.memora-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    padding-top: 14px;
+}
+
+.memora-bottom span {
+    font: 10px "DM Mono";
+    color: #a0a0a5;
+    letter-spacing: .04em;
+    max-width: 70%;
+    line-height: 1.4;
+}
+
+.memora-bottom small {
+    font: 10px "DM Mono";
+    color: #e6ff3f;
+    letter-spacing: .06em;
+    font-weight: 600;
+}
+
+.badge-building {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font: 9px "DM Mono";
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    background: #e6ff3f;
+    color: #111;
+    padding: 3px 8px;
+    border-radius: 100px;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(230, 255, 63, .45);
+    animation: buildingPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes buildingPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: .85;
+        transform: scale(0.96);
+    }
 }
 
 .metrics-section {
@@ -919,6 +1036,15 @@ body {
 
     .poster-a {
         width: 65vw
+    }
+
+    .memora-card {
+        width: 80vw;
+        padding: 24px;
+    }
+
+    .memora-title {
+        font-size: clamp(42px, 11vw, 70px);
     }
 
     .about-grid {

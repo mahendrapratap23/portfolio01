@@ -90,11 +90,26 @@ const projectData = {
       'Well-documented Jupyter Notebooks for computer science education.'
     ],
     repo: 'https://github.com/mahendrapratap23/college-practical-codes'
+  },
+  'memora': {
+    title: 'MEMORA — Personal AI Assistant & Autonomous Agent',
+    tech: 'Python • OpenAI • Pydantic • LLM Orchestration • CLI REPL',
+    tag: '⚡ CURRENTLY BUILDING • v0.1 RELEASED',
+    desc: 'A production-grade personal AI assistant and autonomous agent architecture engineered incrementally from scratch in Python. Built with decoupled LLM provider interfaces, Pydantic runtime settings validation, custom domain exceptions, and an interactive terminal CLI REPL.',
+    highlights: [
+      'Active development with v0.1 released, complete architectural blueprints and 9-phase roadmap.',
+      'Decoupled LLM client interface supporting OpenAI, Groq, Ollama, and OpenRouter without vendor lock-in.',
+      'Strict Pydantic configuration validation with automated API key credential masking.',
+      'Comprehensive Pytest automated test suite with 20 passing unit tests and 100% mocked LLM coverage.',
+      'Multi-phase agent architecture engineered for semantic memory, vector databases, and autonomous tool calling.'
+    ],
+    repo: 'https://github.com/mahendrapratap23/MEMORA'
   }
 };
 
 // Modal Elements
 const modal = document.getElementById('projectModal');
+const modalTag = document.getElementById('modalTag');
 const modalTitle = document.getElementById('modalTitle');
 const modalTech = document.getElementById('modalTech');
 const modalDesc = document.getElementById('modalDesc');
@@ -108,6 +123,9 @@ const openModal = (projectId) => {
   const data = projectData[projectId];
   if (!data) return;
 
+  if (modalTag) {
+    modalTag.textContent = data.tag || 'FEATURED PROJECT';
+  }
   modalTitle.textContent = data.title;
   modalTech.textContent = data.tech;
   modalDesc.textContent = data.desc;
