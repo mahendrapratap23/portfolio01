@@ -31,7 +31,7 @@
     <div class="nav-actions">
       <div class="view-counter-badge magnetic" id="viewCounterBadge" title="Live Portfolio Views">
         <span class="view-counter-dot" aria-hidden="true"></span>
-        <span class="view-counter-num" id="viewCount">...</span>
+        <span class="view-counter-num" id="viewCount">1,500</span>
         <span class="view-counter-label">VIEWS</span>
       </div>
       <a class="resume-nav-btn magnetic" href="Mahendra_Pratap_Resume.pdf" download="Mahendra_Pratap_Resume.pdf"
@@ -81,11 +81,11 @@
             <div class="project-reactions">
               <button class="reaction-pill magnetic" data-project="ghumo-ai" data-type="fire" aria-label="Fire reaction for Ghumo AI">
                 <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">0</span>
+                <span class="reaction-count">538</span>
               </button>
               <button class="reaction-pill magnetic" data-project="ghumo-ai" data-type="rocket" aria-label="Rocket reaction for Ghumo AI">
                 <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">0</span>
+                <span class="reaction-count">519</span>
               </button>
             </div>
           </div>
@@ -105,11 +105,11 @@
             <div class="project-reactions">
               <button class="reaction-pill magnetic" data-project="trackly" data-type="fire" aria-label="Fire reaction for Trackly">
                 <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">0</span>
+                <span class="reaction-count">526</span>
               </button>
               <button class="reaction-pill magnetic" data-project="trackly" data-type="rocket" aria-label="Rocket reaction for Trackly">
                 <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">0</span>
+                <span class="reaction-count">542</span>
               </button>
             </div>
           </div>
@@ -130,11 +130,11 @@
             <div class="project-reactions">
               <button class="reaction-pill magnetic" data-project="college-practical-codes" data-type="fire" aria-label="Fire reaction for AI &amp; ML Practical Suite">
                 <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">0</span>
+                <span class="reaction-count">515</span>
               </button>
               <button class="reaction-pill magnetic" data-project="college-practical-codes" data-type="rocket" aria-label="Rocket reaction for AI &amp; ML Practical Suite">
                 <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">0</span>
+                <span class="reaction-count">508</span>
               </button>
             </div>
           </div>
@@ -167,11 +167,11 @@
             <div class="project-reactions">
               <button class="reaction-pill magnetic" data-project="memora" data-type="fire" aria-label="Fire reaction for MEMORA">
                 <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">0</span>
+                <span class="reaction-count">574</span>
               </button>
               <button class="reaction-pill magnetic" data-project="memora" data-type="rocket" aria-label="Rocket reaction for MEMORA">
                 <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">0</span>
+                <span class="reaction-count">561</span>
               </button>
             </div>
           </div>
@@ -332,6 +332,247 @@
   <div class="toast" id="toast">Link copied to clipboard!</div>
 
   <script src="script.js?v=2"></script>
+
+  <!-- Firebase Realtime Database: Live Views & Emoji Reactions -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
+    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCM0dkd03E73aLWGrMtt3xtSrDra4Pm_eA",
+      authDomain: "mahendra-portfolio-436ce.firebaseapp.com",
+      databaseURL: "https://mahendra-portfolio-436ce-default-rtdb.firebaseio.com",
+      projectId: "mahendra-portfolio-436ce",
+      storageBucket: "mahendra-portfolio-436ce.firebasestorage.app",
+      messagingSenderId: "590050555393",
+      appId: "1:590050555393:web:c307841645de948053f200",
+      measurementId: "G-5CME5TQGTB"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    // ==========================================================================
+    // 1. Header View Counter (Realtime Sync, Fallbacks & Deduplication)
+    // ==========================================================================
+    const BASE_VIEWS = 1500;
+
+    const viewCountEl = document.getElementById('viewCount')
+      || document.getElementById('page-views')
+      || document.querySelector('.view-count')
+      || document.querySelector('.view-counter-num');
+
+    // Helper to calculate displayed views starting after 1500
+    const calculateDisplayViews = (raw) => {
+      const num = (raw !== null && raw !== undefined) ? Number(raw) : 0;
+      return num >= BASE_VIEWS ? num : (BASE_VIEWS + num);
+    };
+
+    // Immediate cached display to prevent layout shifts or stuck placeholder
+    const cachedTotal = localStorage.getItem('portfolio_views_total');
+    if (viewCountEl) {
+      if (cachedTotal && Number(cachedTotal) >= BASE_VIEWS) {
+        viewCountEl.textContent = Number(cachedTotal).toLocaleString();
+      } else {
+        viewCountEl.textContent = Number(BASE_VIEWS).toLocaleString();
+      }
+    }
+
+    const totalViewsRef = ref(db, 'portfolio/views/total');
+    let hasReceivedViews = false;
+
+    // Real-time live sync across all connected clients
+    onValue(totalViewsRef, (snapshot) => {
+      hasReceivedViews = true;
+      const count = calculateDisplayViews(snapshot.val());
+      if (viewCountEl) {
+        viewCountEl.textContent = count.toLocaleString();
+      }
+      localStorage.setItem('portfolio_views_total', String(count));
+    }, (err) => {
+      hasReceivedViews = true;
+      console.warn('Firebase RTDB views listener notice (check database security rules):', err.message || err);
+      if (viewCountEl) {
+        const fallback = localStorage.getItem('portfolio_views_total') || String(BASE_VIEWS + 1);
+        viewCountEl.textContent = Number(fallback).toLocaleString();
+      }
+    });
+
+    // Offline / latency safeguard: ensure counter never stays stuck or < 1500
+    setTimeout(() => {
+      if (!hasReceivedViews && viewCountEl && (!viewCountEl.textContent || viewCountEl.textContent === '...' || Number(viewCountEl.textContent.replace(/,/g, '')) < BASE_VIEWS)) {
+        const fallback = localStorage.getItem('portfolio_views_total') || String(BASE_VIEWS + 1);
+        viewCountEl.textContent = Number(fallback).toLocaleString();
+      }
+    }, 2500);
+
+    // Initial visit check per session
+    const hasViewed = sessionStorage.getItem('has_viewed_site');
+
+    if (!hasViewed) {
+      sessionStorage.setItem('has_viewed_site', 'true');
+
+      // Atomic increment on initial session visit (works on localhost & production)
+      runTransaction(totalViewsRef, (current) => {
+        if (!current || current < BASE_VIEWS) {
+          return BASE_VIEWS + 1;
+        }
+        return current + 1;
+      }).catch(err => console.warn('Firebase total views transaction notice:', err.message || err));
+
+      // Check LinkedIn Referrer
+      const referrer = (document.referrer || '').toLowerCase();
+      const urlParams = new URLSearchParams(window.location.search);
+      const isLinkedIn = (
+        referrer.includes('linkedin.com') ||
+        referrer.includes('lnkd.in') ||
+        urlParams.get('ref') === 'linkedin'
+      );
+
+      if (isLinkedIn) {
+        const linkedinViewsRef = ref(db, 'portfolio/views/linkedin');
+        runTransaction(linkedinViewsRef, (current) => (current || 0) + 1)
+          .catch(err => console.warn('Firebase LinkedIn views transaction notice:', err.message || err));
+      }
+    }
+
+    // ==========================================================================
+    // 2. Project Reaction Pills (🔥 Fire & 🚀 Rocket) starting after 500
+    // ==========================================================================
+    const PROJECT_BASE_REACTIONS = {
+      'ghumo-ai': { fire: 538, rocket: 519 },
+      'trackly': { fire: 526, rocket: 542 },
+      'college-practical-codes': { fire: 515, rocket: 508 },
+      'memora': { fire: 574, rocket: 561 }
+    };
+
+    const getBaseReaction = (project, type) => {
+      if (PROJECT_BASE_REACTIONS[project] && PROJECT_BASE_REACTIONS[project][type]) {
+        return PROJECT_BASE_REACTIONS[project][type];
+      }
+      let hash = 0;
+      const str = `${project}_${type}`;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return 500 + Math.abs(hash % 85) + 5;
+    };
+
+    const calculateDisplayReaction = (project, type, raw) => {
+      const base = getBaseReaction(project, type);
+      const num = (raw !== null && raw !== undefined) ? Number(raw) : 0;
+      return num >= base ? num : (base + num);
+    };
+
+    const spawnEmojiParticle = (emoji, x, y) => {
+      const particle = document.createElement('span');
+      particle.className = 'floating-emoji-particle';
+      particle.textContent = emoji;
+      const drift = (Math.random() * 40 - 20).toFixed(1) + 'px';
+      particle.style.setProperty('--drift', drift);
+      particle.style.left = `${x}px`;
+      particle.style.top = `${y}px`;
+      document.body.appendChild(particle);
+      particle.addEventListener('animationend', () => particle.remove());
+      setTimeout(() => particle.remove(), 1200);
+    };
+
+    // Support query param ?reset_votes=1 to reset voted state for testing
+    if (new URLSearchParams(window.location.search).has('reset_votes')) {
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('reacted_')) localStorage.removeItem(key);
+      });
+    }
+
+    const reactionPills = document.querySelectorAll('.reaction-pill');
+    reactionPills.forEach(pill => {
+      const project = pill.getAttribute('data-project');
+      const type = pill.getAttribute('data-type');
+      if (!project || !type) return;
+
+      const emojiSpan = pill.querySelector('.reaction-emoji');
+      const countSpan = pill.querySelector('.reaction-count');
+      const voteKey = `reacted_${project}_${type}`;
+      const reactionRef = ref(db, `portfolio/reactions/${project}/${type}`);
+      const baseCount = getBaseReaction(project, type);
+
+      // Restore device voted state
+      if (localStorage.getItem(voteKey) === 'true') {
+        pill.classList.add('voted');
+      }
+
+      // Restore cached count if available, or initialize with baseline
+      const cachedCount = localStorage.getItem(`cached_${project}_${type}`);
+      if (countSpan) {
+        if (cachedCount && Number(cachedCount) >= baseCount) {
+          countSpan.textContent = Number(cachedCount).toLocaleString();
+        } else {
+          countSpan.textContent = Number(baseCount).toLocaleString();
+        }
+      }
+
+      // Live real-time sync across all open browsers
+      onValue(reactionRef, (snapshot) => {
+        const count = calculateDisplayReaction(project, type, snapshot.val());
+        if (countSpan) {
+          countSpan.textContent = count.toLocaleString();
+        }
+        localStorage.setItem(`cached_${project}_${type}`, String(count));
+      }, (err) => {
+        console.warn(`Firebase reaction listener notice (${project}/${type}):`, err.message || err);
+        if (countSpan && (!countSpan.textContent || countSpan.textContent === '...')) {
+          const cached = localStorage.getItem(`cached_${project}_${type}`) || String(baseCount);
+          countSpan.textContent = Number(cached).toLocaleString();
+        }
+      });
+
+      // Handle tactile micro-interaction & transaction increment
+      pill.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const emoji = emojiSpan?.textContent.trim() || (type === 'fire' ? '🔥' : '🚀');
+        const rect = pill.getBoundingClientRect();
+        const clickX = e.clientX && e.clientX > 0 ? e.clientX : (rect.left + rect.width / 2);
+        const clickY = e.clientY && e.clientY > 0 ? e.clientY : (rect.top + rect.height / 2);
+
+        // Tactile button bounce & floating particle animation
+        pill.classList.remove('pop');
+        void pill.offsetWidth;
+        pill.classList.add('pop');
+        spawnEmojiParticle(emoji, clickX, clickY);
+
+        // Suppress duplicate database writes if already voted
+        if (localStorage.getItem(voteKey) === 'true') {
+          return;
+        }
+
+        // Set voted state immediately
+        localStorage.setItem(voteKey, 'true');
+        pill.classList.add('voted');
+
+        // Optimistically increment display
+        const currentNum = parseInt(countSpan?.textContent.replace(/,/g, ''), 10) || baseCount;
+        const newCount = currentNum + 1;
+        if (countSpan) {
+          countSpan.textContent = newCount.toLocaleString();
+        }
+        localStorage.setItem(`cached_${project}_${type}`, String(newCount));
+
+        // Increment in Firebase Realtime Database
+        runTransaction(reactionRef, (current) => {
+          if (!current || current < baseCount) {
+            return baseCount + 1;
+          }
+          return current + 1;
+        }).catch(err => console.warn(`Firebase reaction transaction error (${project}/${type}):`, err.message || err));
+      });
+    });
+  </script>
 </body>
 
 </html>

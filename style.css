@@ -1314,11 +1314,13 @@ body {
     }
 }
 
+.reaction-pill.voted,
 .reaction-pill.has-voted {
     border-color: var(--fg);
     background: rgba(125, 125, 125, .12);
 }
 
+body.dark-mode .reaction-pill.voted,
 body.dark-mode .reaction-pill.has-voted {
     border-color: var(--accent);
     background: rgba(230, 255, 63, .08);
