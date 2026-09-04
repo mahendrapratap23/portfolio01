@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 
 <body>
@@ -29,6 +29,11 @@
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-actions">
+      <div class="view-counter-badge magnetic" id="viewCounterBadge" title="Live Portfolio Views">
+        <span class="view-counter-dot" aria-hidden="true"></span>
+        <span class="view-counter-num" id="viewCount">...</span>
+        <span class="view-counter-label">VIEWS</span>
+      </div>
       <a class="resume-nav-btn magnetic" href="Mahendra_Pratap_Resume.pdf" download="Mahendra_Pratap_Resume.pdf"
         target="_blank">📄 Resume PDF</a>
       <button class="theme-toggle magnetic" id="themeBtn" aria-label="Toggle theme mode">DARK MODE</button>
@@ -71,7 +76,19 @@
           <div><b>01</b>
             <h2>Ghumo AI <span class="arrow">↗</span></h2>
           </div>
-          <span>AI Travel Planner / TypeScript / Maps API</span>
+          <div class="project-meta-right">
+            <span>AI Travel Planner / TypeScript / Maps API</span>
+            <div class="project-reactions">
+              <button class="reaction-pill magnetic" data-project="ghumo-ai" data-type="fire" aria-label="Fire reaction for Ghumo AI">
+                <span class="reaction-emoji">🔥</span>
+                <span class="reaction-count">0</span>
+              </button>
+              <button class="reaction-pill magnetic" data-project="ghumo-ai" data-type="rocket" aria-label="Rocket reaction for Ghumo AI">
+                <span class="reaction-emoji">🚀</span>
+                <span class="reaction-count">0</span>
+              </button>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -83,7 +100,19 @@
           <div><b>02</b>
             <h2>Trackly <span class="arrow">↗</span></h2>
           </div>
-          <span>Universal Analytics / TypeScript / Firebase</span>
+          <div class="project-meta-right">
+            <span>Universal Analytics / TypeScript / Firebase</span>
+            <div class="project-reactions">
+              <button class="reaction-pill magnetic" data-project="trackly" data-type="fire" aria-label="Fire reaction for Trackly">
+                <span class="reaction-emoji">🔥</span>
+                <span class="reaction-count">0</span>
+              </button>
+              <button class="reaction-pill magnetic" data-project="trackly" data-type="rocket" aria-label="Rocket reaction for Trackly">
+                <span class="reaction-emoji">🚀</span>
+                <span class="reaction-count">0</span>
+              </button>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -96,7 +125,19 @@
           <div><b>03</b>
             <h2>AI &amp; ML Practical Suite <span class="arrow">↗</span></h2>
           </div>
-          <span>Machine Learning / Python / DAA Algorithms</span>
+          <div class="project-meta-right">
+            <span>Machine Learning / Python / DAA Algorithms</span>
+            <div class="project-reactions">
+              <button class="reaction-pill magnetic" data-project="college-practical-codes" data-type="fire" aria-label="Fire reaction for AI &amp; ML Practical Suite">
+                <span class="reaction-emoji">🔥</span>
+                <span class="reaction-count">0</span>
+              </button>
+              <button class="reaction-pill magnetic" data-project="college-practical-codes" data-type="rocket" aria-label="Rocket reaction for AI &amp; ML Practical Suite">
+                <span class="reaction-emoji">🚀</span>
+                <span class="reaction-count">0</span>
+              </button>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -121,7 +162,19 @@
           <div><b>04</b>
             <h2>MEMORA <span class="badge-building">● IN ACTIVE BUILD</span> <span class="arrow">↗</span></h2>
           </div>
-          <span>Personal AI Assistant &amp; Autonomous Agent / Python / LLM Architecture</span>
+          <div class="project-meta-right">
+            <span>Personal AI Assistant &amp; Autonomous Agent / Python / LLM Architecture</span>
+            <div class="project-reactions">
+              <button class="reaction-pill magnetic" data-project="memora" data-type="fire" aria-label="Fire reaction for MEMORA">
+                <span class="reaction-emoji">🔥</span>
+                <span class="reaction-count">0</span>
+              </button>
+              <button class="reaction-pill magnetic" data-project="memora" data-type="rocket" aria-label="Rocket reaction for MEMORA">
+                <span class="reaction-emoji">🚀</span>
+                <span class="reaction-count">0</span>
+              </button>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -278,7 +331,7 @@
   <!-- Toast Notification -->
   <div class="toast" id="toast">Link copied to clipboard!</div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 
 </html>
