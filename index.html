@@ -657,58 +657,21 @@
       toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
     };
 
-    // Curated community feedback notes seeded across sections
-    const DEFAULT_COMMUNITY_NOTES = {
-      "note_hero_1": {
-        text: "Loved the minimalist dark aesthetic and smooth typography!",
-        author: "Alex (Product Designer)",
-        xPercent: 32,
-        yAbsolute: 320,
-        timestamp: Date.now() - 3600000 * 4,
-        color: "#e6ff3f"
-      },
-      "note_ghumo_2": {
-        text: "The AI itinerary generator UX is so snappy and intuitive.",
-        author: "Priyanshu (Full Stack Dev)",
-        xPercent: 54,
-        yAbsolute: 1420,
-        timestamp: Date.now() - 3600000 * 12,
-        color: "#38bdf8"
-      },
-      "note_trackly_3": {
-        text: "Clean expense breakdown & interactive charts. Super practical app!",
-        author: "Sarah M. (Product Manager)",
-        xPercent: 22,
-        yAbsolute: 2680,
-        timestamp: Date.now() - 3600000 * 24,
-        color: "#f472b6"
-      },
-      "note_memora_4": {
-        text: "Memora multimodal agent architecture with DeepSeek is brilliant!",
-        author: "Dr. Vikram (AI Researcher)",
-        xPercent: 52,
-        yAbsolute: 5420,
-        timestamp: Date.now() - 3600000 * 30,
-        color: "#facc15"
-      },
-      "note_contact_5": {
-        text: "Impressive engineering and design. Sending an interview invite!",
-        author: "David K. (Tech Recruiter)",
-        xPercent: 35,
-        yAbsolute: 7850,
-        timestamp: Date.now() - 3600000 * 48,
-        color: "#4ade80"
-      }
-    };
-
+    // Local storage caching for genuine user notes only
     const getCachedNotes = () => {
       try {
-        const stored = JSON.parse(localStorage.getItem('portfolio_notes_cache') || 'null');
-        if (stored && typeof stored === 'object' && Object.keys(stored).length > 0) {
-          return Object.assign({}, DEFAULT_COMMUNITY_NOTES, stored);
+        const stored = JSON.parse(localStorage.getItem('portfolio_notes_cache') || '{}');
+        if (stored && typeof stored === 'object') {
+          const genuine = {};
+          Object.entries(stored).forEach(([k, v]) => {
+            if (!k.startsWith('note_seed_') && !k.startsWith('note_hero_') && !k.startsWith('note_ghumo_') && !k.startsWith('note_trackly_') && !k.startsWith('note_memora_') && !k.startsWith('note_contact_')) {
+              genuine[k] = v;
+            }
+          });
+          return genuine;
         }
       } catch (e) {}
-      return Object.assign({}, DEFAULT_COMMUNITY_NOTES);
+      return {};
     };
 
     const setCachedNotes = (notesObj) => {
@@ -717,10 +680,17 @@
       } catch (e) {}
     };
 
+    // Auto-purge any stale fake notes from localStorage on startup
+    try {
+      localStorage.setItem('portfolio_notes_cache', JSON.stringify(getCachedNotes()));
+    } catch (e) {}
+
     const updateCachedNote = (noteId, noteData) => {
       const cache = getCachedNotes();
       if (noteData) {
         cache[noteId] = noteData;
+      } else {
+        delete cache[noteId];
       }
       setCachedNotes(cache);
     };
@@ -799,20 +769,13 @@
       if (snBoxTrigger) snBoxTrigger.classList.toggle('is-active', isNotesBoxOpen);
       if (snBoxPanel) snBoxPanel.classList.toggle('is-open', isNotesBoxOpen);
 
-      // Smooth Gather / Scatter transition on cards
+      // Smooth Gather / Scatter transition on cards:
+      // When open: cards fold and vanish cleanly into the box, zero clutter on canvas
+      // When closed: cards smoothly un-fold back at their exact canvas positions
       if (stickyNotesLayer) {
         const cards = stickyNotesLayer.querySelectorAll('.sn-card');
-        const boxRect = snBoxTrigger ? snBoxTrigger.getBoundingClientRect() : { left: window.innerWidth - 60, top: window.innerHeight - 50, width: 40, height: 40 };
-
-        cards.forEach((card, idx) => {
+        cards.forEach((card) => {
           if (isNotesBoxOpen) {
-            const cardRect = card.getBoundingClientRect();
-            const dx = Math.round((boxRect.left + boxRect.width / 2) - (cardRect.left + cardRect.width / 2));
-            const dy = Math.round((boxRect.top + boxRect.height / 2) - (cardRect.top + cardRect.height / 2));
-            const rot = ((idx % 5) - 2) * 6;
-            card.style.setProperty('--gather-x', `${dx}px`);
-            card.style.setProperty('--gather-y', `${dy}px`);
-            card.style.setProperty('--gather-rot', `${rot}deg`);
             card.classList.add('is-gathered');
           } else {
             card.classList.remove('is-gathered');
@@ -1181,7 +1144,7 @@
       }
     };
 
-    // 1. Initial immediate hydration from cache & default community feedback notes
+    // 1. Initial immediate hydration from local cache (strictly genuine notes)
     const initialCached = getCachedNotes();
     if (initialCached && typeof initialCached === 'object') {
       Object.entries(initialCached).forEach(([id, item]) => {
@@ -1196,18 +1159,36 @@
     // 2. Live Real-Time Synchronization Listener with Firebase
     onValue(notesRef, (snapshot) => {
       const notesData = snapshot.val();
-      if (!notesData) {
-        // Seed initial community feedback to Firebase RTDB so all visitors see them
-        set(notesRef, DEFAULT_COMMUNITY_NOTES).catch(() => {});
+      const liveIds = new Set();
+      if (notesData && typeof notesData === 'object') {
+        Object.entries(notesData).forEach(([id, item]) => {
+          // Purge any fake/seed test notes from Firebase so only genuine notes exist
+          if (id.startsWith('note_seed_') || id.startsWith('note_hero_') || id.startsWith('note_ghumo_') || id.startsWith('note_trackly_') || id.startsWith('note_memora_') || id.startsWith('note_contact_')) {
+            remove(ref(db, `portfolio/notes/${id}`)).catch(() => {});
+            return;
+          }
+          if (item && typeof item === 'object') {
+            liveIds.add(id);
+            activeNotes.set(id, item);
+            updateCachedNote(id, item);
+            renderNote(id, item);
+          }
+        });
       }
-      const combined = Object.assign({}, DEFAULT_COMMUNITY_NOTES, notesData || {});
-      Object.entries(combined).forEach(([id, item]) => {
-        if (item && typeof item === 'object') {
-          activeNotes.set(id, item);
-          updateCachedNote(id, item);
-          renderNote(id, item);
-        }
-      });
+
+      // Reconcile and clean removed or fake notes from canvas
+      if (stickyNotesLayer) {
+        stickyNotesLayer.querySelectorAll('.sn-card').forEach(c => {
+          const id = c.getAttribute('data-note-id');
+          if (id && !liveIds.has(id)) {
+            c.remove();
+            activeNotes.delete(id);
+            const cache = getCachedNotes();
+            delete cache[id];
+            setCachedNotes(cache);
+          }
+        });
+      }
       updateNotesBoxUI();
     }, (err) => {
       console.warn('Firebase notes real-time listener notice (check rules):', err.message || err);
