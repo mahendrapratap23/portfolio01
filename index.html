@@ -657,34 +657,58 @@
       toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
     };
 
-    // User ownership & local caching helpers
-    const getMyNoteIds = () => {
-      try {
-        return JSON.parse(localStorage.getItem('my_posted_notes') || '[]');
-      } catch (e) {
-        return [];
+    // Curated community feedback notes seeded across sections
+    const DEFAULT_COMMUNITY_NOTES = {
+      "note_hero_1": {
+        text: "Loved the minimalist dark aesthetic and smooth typography!",
+        author: "Alex (Product Designer)",
+        xPercent: 32,
+        yAbsolute: 320,
+        timestamp: Date.now() - 3600000 * 4,
+        color: "#e6ff3f"
+      },
+      "note_ghumo_2": {
+        text: "The AI itinerary generator UX is so snappy and intuitive.",
+        author: "Priyanshu (Full Stack Dev)",
+        xPercent: 54,
+        yAbsolute: 1420,
+        timestamp: Date.now() - 3600000 * 12,
+        color: "#38bdf8"
+      },
+      "note_trackly_3": {
+        text: "Clean expense breakdown & interactive charts. Super practical app!",
+        author: "Sarah M. (Product Manager)",
+        xPercent: 22,
+        yAbsolute: 2680,
+        timestamp: Date.now() - 3600000 * 24,
+        color: "#f472b6"
+      },
+      "note_memora_4": {
+        text: "Memora multimodal agent architecture with DeepSeek is brilliant!",
+        author: "Dr. Vikram (AI Researcher)",
+        xPercent: 52,
+        yAbsolute: 5420,
+        timestamp: Date.now() - 3600000 * 30,
+        color: "#facc15"
+      },
+      "note_contact_5": {
+        text: "Impressive engineering and design. Sending an interview invite!",
+        author: "David K. (Tech Recruiter)",
+        xPercent: 35,
+        yAbsolute: 7850,
+        timestamp: Date.now() - 3600000 * 48,
+        color: "#4ade80"
       }
-    };
-
-    const addMyNoteId = (id) => {
-      const ids = getMyNoteIds();
-      if (!ids.includes(id)) {
-        ids.push(id);
-        localStorage.setItem('my_posted_notes', JSON.stringify(ids));
-      }
-    };
-
-    const removeMyNoteId = (id) => {
-      const ids = getMyNoteIds().filter(x => x !== id);
-      localStorage.setItem('my_posted_notes', JSON.stringify(ids));
     };
 
     const getCachedNotes = () => {
       try {
-        return JSON.parse(localStorage.getItem('portfolio_notes_cache') || '{}');
-      } catch (e) {
-        return {};
-      }
+        const stored = JSON.parse(localStorage.getItem('portfolio_notes_cache') || 'null');
+        if (stored && typeof stored === 'object' && Object.keys(stored).length > 0) {
+          return Object.assign({}, DEFAULT_COMMUNITY_NOTES, stored);
+        }
+      } catch (e) {}
+      return Object.assign({}, DEFAULT_COMMUNITY_NOTES);
     };
 
     const setCachedNotes = (notesObj) => {
@@ -697,8 +721,6 @@
       const cache = getCachedNotes();
       if (noteData) {
         cache[noteId] = noteData;
-      } else {
-        delete cache[noteId];
       }
       setCachedNotes(cache);
     };
@@ -780,9 +802,16 @@
       // Smooth Gather / Scatter transition on cards
       if (stickyNotesLayer) {
         const cards = stickyNotesLayer.querySelectorAll('.sn-card');
+        const boxRect = snBoxTrigger ? snBoxTrigger.getBoundingClientRect() : { left: window.innerWidth - 60, top: window.innerHeight - 50, width: 40, height: 40 };
+
         cards.forEach((card, idx) => {
           if (isNotesBoxOpen) {
-            const rot = ((idx % 5) - 2) * 4;
+            const cardRect = card.getBoundingClientRect();
+            const dx = Math.round((boxRect.left + boxRect.width / 2) - (cardRect.left + cardRect.width / 2));
+            const dy = Math.round((boxRect.top + boxRect.height / 2) - (cardRect.top + cardRect.height / 2));
+            const rot = ((idx % 5) - 2) * 6;
+            card.style.setProperty('--gather-x', `${dx}px`);
+            card.style.setProperty('--gather-y', `${dy}px`);
             card.style.setProperty('--gather-rot', `${rot}deg`);
             card.classList.add('is-gathered');
           } else {
@@ -1004,7 +1033,6 @@
 
         const newNoteRef = push(notesRef);
         const noteId = newNoteRef.key || `local_${Date.now()}`;
-        addMyNoteId(noteId);
         closeDraft();
 
         // Save locally and update in-memory
@@ -1014,7 +1042,7 @@
         // Optimistically render note immediately on canvas
         renderNote(noteId, noteData);
         updateNotesBoxUI();
-        showSnToast('Note pinned to canvas! 📌');
+        showSnToast('Note permanently pinned to canvas! 📌');
 
         // Persist to Firebase RTDB
         set(newNoteRef, noteData).catch(err => {
@@ -1039,13 +1067,12 @@
       spawnDraftCard(xPercent, yAbsolute);
     }, true);
 
-    // Render & Bind Draggable Note Card
+    // Render & Bind Draggable Note Card (Permanent: no delete / cut option)
     const renderNote = (noteId, data) => {
       if (!stickyNotesLayer || !data) return;
 
       syncLayerHeight();
       let card = stickyNotesLayer.querySelector(`.sn-card[data-note-id="${noteId}"]`);
-      const isOwned = getMyNoteIds().includes(noteId);
 
       if (!card) {
         card = document.createElement('div');
@@ -1059,7 +1086,7 @@
       const cardWidth = Math.min(230, docWidth - 30);
       const leftPx = Math.max(12, Math.min(docWidth - cardWidth - 12, (data.xPercent / 100) * docWidth));
 
-      // Do not jerk coordinates if currently being dragged
+      // Do not jerk coordinates if currently being dragged or gathered
       if (!card.classList.contains('is-dragging') && !card.classList.contains('is-gathered')) {
         card.style.left = `${leftPx}px`;
         card.style.top = `${data.yAbsolute}px`;
@@ -1076,7 +1103,7 @@
           <div class="sn-card-grip" title="Drag note">
             <span></span><span></span><span></span>
           </div>
-          ${isOwned ? `<button class="sn-card-delete" title="Delete your note" aria-label="Delete note">✕</button>` : ''}
+          <span class="sn-card-pin-badge" title="Permanently pinned note">📌</span>
         </div>
         <div class="sn-card-body">${safeText.innerHTML}</div>
         <div class="sn-card-footer">
@@ -1084,24 +1111,6 @@
           <span class="sn-card-time">${formatRelativeTime(data.timestamp)}</span>
         </div>
       `;
-
-      // Delete listener for owner
-      if (isOwned) {
-        const delBtn = card.querySelector('.sn-card-delete');
-        if (delBtn) {
-          delBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            removeMyNoteId(noteId);
-            activeNotes.delete(noteId);
-            updateCachedNote(noteId, null);
-            card.remove();
-            updateNotesBoxUI();
-            remove(ref(db, `portfolio/notes/${noteId}`)).catch(err => console.warn('Firebase note remove notice:', err));
-            showSnToast('Note removed.');
-          });
-        }
-      }
 
       // Pointer events dragging mechanics with 60fps physics
       if (!card.dataset.dragBound) {
@@ -1113,7 +1122,6 @@
         let curX = 0, curY = 0;
 
         card.addEventListener('pointerdown', (e) => {
-          if (e.target.closest('.sn-card-delete')) return;
           if (e.button !== 0) return; // Left-click only
           if (card.classList.contains('is-gathered')) return;
 
@@ -1173,7 +1181,7 @@
       }
     };
 
-    // 1. Initial immediate hydration from localStorage cache (zero delay & zero flicker)
+    // 1. Initial immediate hydration from cache & default community feedback notes
     const initialCached = getCachedNotes();
     if (initialCached && typeof initialCached === 'object') {
       Object.entries(initialCached).forEach(([id, item]) => {
@@ -1188,28 +1196,18 @@
     // 2. Live Real-Time Synchronization Listener with Firebase
     onValue(notesRef, (snapshot) => {
       const notesData = snapshot.val();
-      const liveIds = new Set();
-      if (notesData) {
-        Object.entries(notesData).forEach(([id, item]) => {
-          if (item && typeof item === 'object') {
-            liveIds.add(id);
-            activeNotes.set(id, item);
-            updateCachedNote(id, item);
-            renderNote(id, item);
-          }
-        });
+      if (!notesData) {
+        // Seed initial community feedback to Firebase RTDB so all visitors see them
+        set(notesRef, DEFAULT_COMMUNITY_NOTES).catch(() => {});
       }
-      // Reconcile removed notes
-      if (stickyNotesLayer && notesData) {
-        stickyNotesLayer.querySelectorAll('.sn-card').forEach(c => {
-          const id = c.getAttribute('data-note-id');
-          if (id && !liveIds.has(id)) {
-            c.remove();
-            activeNotes.delete(id);
-            updateCachedNote(id, null);
-          }
-        });
-      }
+      const combined = Object.assign({}, DEFAULT_COMMUNITY_NOTES, notesData || {});
+      Object.entries(combined).forEach(([id, item]) => {
+        if (item && typeof item === 'object') {
+          activeNotes.set(id, item);
+          updateCachedNote(id, item);
+          renderNote(id, item);
+        }
+      });
       updateNotesBoxUI();
     }, (err) => {
       console.warn('Firebase notes real-time listener notice (check rules):', err.message || err);
