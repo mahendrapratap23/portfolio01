@@ -331,13 +331,20 @@
   <!-- Toast Notification -->
   <div class="toast" id="toast">Link copied to clipboard!</div>
 
+  <!-- Interactive Multiplayer Sticky Notes Layer & Trigger -->
+  <div id="stickyNotesLayer" class="sn-notes-layer"></div>
+  <button id="snTrigger" class="sn-trigger magnetic" aria-label="Leave a sticky note">
+    <span class="sn-trigger-icon">📝</span>
+    <span class="sn-trigger-text">Leave a note</span>
+  </button>
+
   <script src="script.js?v=2"></script>
 
-  <!-- Firebase Realtime Database: Live Views & Emoji Reactions -->
+  <!-- Firebase Realtime Database: Live Views, Reactions & Sticky Notes -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
-    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+    import { getDatabase, ref, onValue, runTransaction, push, update, remove, set } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: atob("QUl6YVN5Q00wZGtkMDNFNzNhTFdHck10dDN4dFNyRHJhNFBtX2VB"),
@@ -571,6 +578,419 @@
           return current + 1;
         }).catch(err => console.warn(`Firebase reaction transaction error (${project}/${type}):`, err.message || err));
       });
+    });
+
+    // ==========================================================================
+    // 3. Draggable Sticky Notes Canvas (Multiplayer System)
+    // ==========================================================================
+    const notesRef = ref(db, 'portfolio/notes');
+    const stickyNotesLayer = document.getElementById('stickyNotesLayer');
+    const snTrigger = document.getElementById('snTrigger');
+    const toastEl = document.getElementById('toast');
+
+    let isPlacementMode = false;
+    let activeDraftEl = null;
+    let snPlacementBanner = null;
+    let toastTimer = null;
+
+    const showSnToast = (msg) => {
+      if (!toastEl) return;
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
+    };
+
+    const getMyNoteIds = () => {
+      try {
+        return JSON.parse(localStorage.getItem('my_posted_notes') || '[]');
+      } catch (e) {
+        return [];
+      }
+    };
+
+    const addMyNoteId = (id) => {
+      const ids = getMyNoteIds();
+      if (!ids.includes(id)) {
+        ids.push(id);
+        localStorage.setItem('my_posted_notes', JSON.stringify(ids));
+      }
+    };
+
+    const removeMyNoteId = (id) => {
+      const ids = getMyNoteIds().filter(x => x !== id);
+      localStorage.setItem('my_posted_notes', JSON.stringify(ids));
+    };
+
+    const formatRelativeTime = (timestamp) => {
+      if (!timestamp) return 'just now';
+      const diffSec = Math.floor((Date.now() - timestamp) / 1000);
+      if (diffSec < 45) return 'just now';
+      const diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return `${diffMin}m ago`;
+      const diffHr = Math.floor(diffMin / 60);
+      if (diffHr < 24) return `${diffHr}h ago`;
+      const diffDays = Math.floor(diffHr / 24);
+      return `${diffDays}d ago`;
+    };
+
+    const NOTE_COLORS = [
+      '#e6ff3f', // signature neon lime
+      '#facc15', // warm yellow
+      '#38bdf8', // electric cyan
+      '#f472b6', // neon magenta
+      '#4ade80'  // emerald green
+    ];
+
+    // Toggle Placement Mode
+    const setPlacementMode = (active) => {
+      isPlacementMode = active;
+      if (activeDraftEl) {
+        activeDraftEl.remove();
+        activeDraftEl = null;
+      }
+      document.body.classList.toggle('sn-placement-active', isPlacementMode);
+      if (snTrigger) {
+        snTrigger.classList.toggle('is-active', isPlacementMode);
+        const icon = snTrigger.querySelector('.sn-trigger-icon');
+        const text = snTrigger.querySelector('.sn-trigger-text');
+        if (icon) icon.textContent = isPlacementMode ? '✕' : '📝';
+        if (text) text.textContent = isPlacementMode ? 'Cancel' : 'Leave a note';
+      }
+
+      if (isPlacementMode) {
+        if (!snPlacementBanner) {
+          snPlacementBanner = document.createElement('div');
+          snPlacementBanner.id = 'snPlacementBanner';
+          snPlacementBanner.className = 'sn-placement-banner';
+          snPlacementBanner.textContent = 'Click anywhere on canvas to place note';
+          document.body.appendChild(snPlacementBanner);
+        }
+      } else if (snPlacementBanner) {
+        snPlacementBanner.remove();
+        snPlacementBanner = null;
+      }
+    };
+
+    if (snTrigger) {
+      snTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setPlacementMode(!isPlacementMode);
+      });
+    }
+
+    // Cancel on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (isPlacementMode) {
+          setPlacementMode(false);
+        } else if (activeDraftEl) {
+          activeDraftEl.remove();
+          activeDraftEl = null;
+        }
+      }
+    });
+
+    // Spawn Draft Note Card
+    const spawnDraftCard = (xPercent, yAbsolute) => {
+      if (activeDraftEl) {
+        activeDraftEl.remove();
+        activeDraftEl = null;
+      }
+
+      const docWidth = document.documentElement.clientWidth;
+      const draftWidth = Math.min(270, docWidth - 32);
+      const leftPx = Math.max(16, Math.min(docWidth - draftWidth - 16, (xPercent / 100) * docWidth));
+
+      let selectedColor = NOTE_COLORS[0];
+
+      const draftCard = document.createElement('div');
+      draftCard.className = 'sn-draft-card';
+      draftCard.style.left = `${leftPx}px`;
+      draftCard.style.top = `${Math.max(80, yAbsolute - 30)}px`;
+
+      draftCard.innerHTML = `
+        <div class="sn-draft-header">
+          <span>Leave a sticky note</span>
+          <button class="sn-card-delete" id="snDraftClose" aria-label="Close draft">✕</button>
+        </div>
+        <textarea class="sn-draft-textarea" id="snDraftText" maxlength="140" placeholder="Leave a thought, critique, or hello..."></textarea>
+        <div class="sn-draft-char-count"><span id="snCharCount">0</span>/140</div>
+        <input type="text" class="sn-draft-input" id="snDraftAuthor" maxlength="30" placeholder="Your name or @handle (optional)" />
+        <div class="sn-draft-colors">
+          ${NOTE_COLORS.map(c => `
+            <div class="sn-color-swatch ${c === selectedColor ? 'is-selected' : ''}" data-color="${c}" style="background: ${c};"></div>
+          `).join('')}
+        </div>
+        <div class="sn-draft-actions">
+          <button class="sn-btn-pin" id="snBtnPin">Pin Note</button>
+          <button class="sn-btn-cancel" id="snBtnCancel">Discard</button>
+        </div>
+      `;
+
+      // Prevent clicks inside draft from closing or triggering canvas
+      draftCard.addEventListener('click', e => e.stopPropagation());
+      draftCard.addEventListener('pointerdown', e => e.stopPropagation());
+
+      stickyNotesLayer.appendChild(draftCard);
+      activeDraftEl = draftCard;
+
+      const textarea = draftCard.querySelector('#snDraftText');
+      const charCountEl = draftCard.querySelector('#snCharCount');
+      const authorInput = draftCard.querySelector('#snDraftAuthor');
+      const btnPin = draftCard.querySelector('#snBtnPin');
+      const btnCancel = draftCard.querySelector('#snBtnCancel');
+      const btnClose = draftCard.querySelector('#snDraftClose');
+      const swatches = draftCard.querySelectorAll('.sn-color-swatch');
+
+      // Auto-focus textarea
+      setTimeout(() => textarea && textarea.focus(), 50);
+
+      // Character counter
+      textarea.addEventListener('input', () => {
+        if (charCountEl) charCountEl.textContent = textarea.value.length;
+      });
+
+      // Color selection
+      swatches.forEach(swatch => {
+        swatch.addEventListener('click', (e) => {
+          e.stopPropagation();
+          swatches.forEach(s => s.classList.remove('is-selected'));
+          swatch.classList.add('is-selected');
+          selectedColor = swatch.getAttribute('data-color');
+        });
+      });
+
+      const closeDraft = () => {
+        draftCard.remove();
+        if (activeDraftEl === draftCard) activeDraftEl = null;
+      };
+
+      btnCancel.addEventListener('click', closeDraft);
+      btnClose.addEventListener('click', closeDraft);
+
+      // Submit / Pin Note
+      btnPin.addEventListener('click', () => {
+        const text = textarea.value.trim();
+        if (!text) {
+          textarea.style.borderColor = '#ef4444';
+          textarea.focus();
+          return;
+        }
+
+        const author = authorInput.value.trim() || 'Anonymous';
+        const finalXPercent = parseFloat(((leftPx / docWidth) * 100).toFixed(2));
+        const finalYAbsolute = Math.round(yAbsolute);
+
+        const noteData = {
+          text,
+          author,
+          xPercent: finalXPercent,
+          yAbsolute: finalYAbsolute,
+          timestamp: Date.now(),
+          color: selectedColor
+        };
+
+        const newNoteRef = push(notesRef);
+        const noteId = newNoteRef.key || `local_${Date.now()}`;
+        addMyNoteId(noteId);
+        closeDraft();
+
+        // Optimistically render note immediately
+        renderNote(noteId, noteData);
+        showSnToast('Note pinned to canvas! 📌');
+
+        // Save to Firebase RTDB
+        set(newNoteRef, noteData).catch(err => {
+          console.warn('Firebase note save notice:', err.message || err);
+        });
+      });
+    };
+
+    // Canvas click interceptor for Placement Mode
+    document.addEventListener('click', (e) => {
+      if (!isPlacementMode) return;
+      if (e.target.closest('#snTrigger') || e.target.closest('.sn-draft-card')) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const docWidth = document.documentElement.clientWidth;
+      const xPercent = (e.pageX / docWidth) * 100;
+      const yAbsolute = e.pageY;
+
+      setPlacementMode(false);
+      spawnDraftCard(xPercent, yAbsolute);
+    }, true);
+
+    // Render & Bind Draggable Note Card
+    const renderNote = (noteId, data) => {
+      if (!stickyNotesLayer || !data) return;
+
+      let card = stickyNotesLayer.querySelector(`.sn-card[data-note-id="${noteId}"]`);
+      const isOwned = getMyNoteIds().includes(noteId);
+
+      if (!card) {
+        card = document.createElement('div');
+        card.className = 'sn-card';
+        card.setAttribute('data-note-id', noteId);
+        stickyNotesLayer.appendChild(card);
+      }
+
+      const docWidth = document.documentElement.clientWidth;
+      const cardWidth = Math.min(230, docWidth - 30);
+      const leftPx = Math.max(12, Math.min(docWidth - cardWidth - 12, (data.xPercent / 100) * docWidth));
+
+      // Do not jerk position if currently being dragged
+      if (!card.classList.contains('is-dragging')) {
+        card.style.left = `${leftPx}px`;
+        card.style.top = `${data.yAbsolute}px`;
+      }
+
+      const safeText = document.createElement('div');
+      safeText.textContent = data.text || '';
+      const safeAuthor = document.createElement('div');
+      safeAuthor.textContent = data.author || 'Anonymous';
+
+      card.innerHTML = `
+        <div class="sn-card-accent" style="background: ${data.color || '#e6ff3f'};"></div>
+        <div class="sn-card-header">
+          <div class="sn-card-grip" title="Drag note">
+            <span></span><span></span><span></span>
+          </div>
+          ${isOwned ? `<button class="sn-card-delete" title="Delete your note" aria-label="Delete note">✕</button>` : ''}
+        </div>
+        <div class="sn-card-body">${safeText.innerHTML}</div>
+        <div class="sn-card-footer">
+          <span class="sn-card-author">${safeAuthor.innerHTML}</span>
+          <span class="sn-card-time">${formatRelativeTime(data.timestamp)}</span>
+        </div>
+      `;
+
+      // Delete listener for owner
+      if (isOwned) {
+        const delBtn = card.querySelector('.sn-card-delete');
+        if (delBtn) {
+          delBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            removeMyNoteId(noteId);
+            card.remove();
+            remove(ref(db, `portfolio/notes/${noteId}`)).catch(err => console.warn('Firebase note remove notice:', err));
+            showSnToast('Note removed.');
+          });
+        }
+      }
+
+      // Pointer events dragging mechanics with 60fps physics
+      if (!card.dataset.dragBound) {
+        card.dataset.dragBound = 'true';
+
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let origX = 0, origY = 0;
+        let curX = 0, curY = 0;
+
+        card.addEventListener('pointerdown', (e) => {
+          if (e.target.closest('.sn-card-delete')) return;
+          if (e.button !== 0) return; // left click only
+          card.setPointerCapture(e.pointerId);
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          origX = parseFloat(card.style.left) || leftPx;
+          origY = parseFloat(card.style.top) || data.yAbsolute;
+          curX = origX;
+          curY = origY;
+          card.classList.add('is-dragging');
+        });
+
+        card.addEventListener('pointermove', (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+
+          const currentDocWidth = document.documentElement.clientWidth;
+          const currentDocHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+          const cWidth = card.offsetWidth || 230;
+          const cHeight = card.offsetHeight || 100;
+
+          curX = Math.max(10, Math.min(currentDocWidth - cWidth - 10, origX + dx));
+          curY = Math.max(65, Math.min(currentDocHeight - cHeight - 20, origY + dy));
+
+          card.style.left = `${curX}px`;
+          card.style.top = `${curY}px`;
+        });
+
+        const handlePointerUp = (e) => {
+          if (!isDragging) return;
+          isDragging = false;
+          card.classList.remove('is-dragging');
+          try { card.releasePointerCapture(e.pointerId); } catch (err) {}
+
+          const currentDocWidth = document.documentElement.clientWidth;
+          const newXPercent = parseFloat(((curX / currentDocWidth) * 100).toFixed(2));
+          const newYAbsolute = Math.round(curY);
+
+          // Update in-memory data
+          data.xPercent = newXPercent;
+          data.yAbsolute = newYAbsolute;
+
+          // Read-Only Safeguard: only commit to Firebase if user created the note
+          if (getMyNoteIds().includes(noteId)) {
+            update(ref(db, `portfolio/notes/${noteId}`), {
+              xPercent: newXPercent,
+              yAbsolute: newYAbsolute
+            }).catch(err => console.warn('Firebase position update notice:', err.message || err));
+          }
+        };
+
+        card.addEventListener('pointerup', handlePointerUp);
+        card.addEventListener('pointercancel', handlePointerUp);
+      }
+    };
+
+    // Live Real-Time Synchronization Listener
+    onValue(notesRef, (snapshot) => {
+      const notesData = snapshot.val();
+      const activeIds = new Set();
+      if (notesData) {
+        Object.entries(notesData).forEach(([id, item]) => {
+          if (item && typeof item === 'object') {
+            activeIds.add(id);
+            renderNote(id, item);
+          }
+        });
+      }
+      // Clean up deleted notes
+      if (stickyNotesLayer) {
+        stickyNotesLayer.querySelectorAll('.sn-card').forEach(c => {
+          const id = c.getAttribute('data-note-id');
+          if (id && !activeIds.has(id)) {
+            c.remove();
+          }
+        });
+      }
+    }, (err) => {
+      console.warn('Firebase notes real-time listener notice (check rules):', err.message || err);
+    });
+
+    // Re-clamp note horizontal positions on window resize
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!stickyNotesLayer) return;
+        const currentDocWidth = document.documentElement.clientWidth;
+        stickyNotesLayer.querySelectorAll('.sn-card').forEach(card => {
+          if (card.classList.contains('is-dragging')) return;
+          const origLeft = parseFloat(card.style.left) || 0;
+          const cWidth = card.offsetWidth || 230;
+          const clamped = Math.max(10, Math.min(currentDocWidth - cWidth - 10, origLeft));
+          card.style.left = `${clamped}px`;
+        });
+      }, 100);
     });
   </script>
 </body>
