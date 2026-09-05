@@ -1553,195 +1553,6 @@ body.sn-placement-active * {
     cursor: crosshair !important;
 }
 
-/* Floating Glassmorphic Notes Box Drawer */
-.sn-box-panel {
-    position: fixed;
-    bottom: 78px;
-    right: 26px;
-    width: 350px;
-    max-height: 480px;
-    background: rgba(18, 18, 22, 0.94);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
-    z-index: 155;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    transform: translateY(16px) scale(0.96);
-    pointer-events: none;
-    transition: opacity .32s cubic-bezier(.16, 1, .3, 1), transform .32s cubic-bezier(.16, 1, .3, 1);
-}
-
-.sn-box-panel.is-open {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-}
-
-body:not(.dark-mode) .sn-box-panel {
-    background: rgba(255, 255, 255, 0.96);
-    border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.08);
-}
-
-.sn-box-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 10px;
-}
-
-body:not(.dark-mode) .sn-box-header {
-    border-bottom-color: rgba(0, 0, 0, 0.08);
-}
-
-.sn-box-title {
-    font: 11px "DM Mono", monospace;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    font-weight: 700;
-    color: var(--fg);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.sn-box-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.sn-box-scatter-btn {
-    background: rgba(230, 255, 63, 0.15);
-    border: 1px solid rgba(230, 255, 63, 0.4);
-    color: var(--fg);
-    font: 10px "DM Mono", monospace;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    padding: 4px 11px;
-    border-radius: 100px;
-    cursor: pointer;
-    transition: background .2s, transform .15s;
-}
-
-.sn-box-scatter-btn:hover {
-    background: var(--accent, #e6ff3f);
-    color: #000000;
-    transform: translateY(-1px);
-}
-
-.sn-box-close-btn {
-    background: transparent;
-    border: none;
-    color: var(--fg);
-    opacity: 0.55;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 2px 6px;
-    border-radius: 4px;
-    transition: opacity .15s, background .15s;
-}
-
-.sn-box-close-btn:hover {
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.sn-box-list {
-    overflow-y: auto;
-    max-height: 350px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-right: 4px;
-}
-
-.sn-box-list::-webkit-scrollbar {
-    width: 4px;
-}
-
-.sn-box-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-}
-
-.sn-box-empty {
-    font: 11px "DM Mono", monospace;
-    color: var(--fg);
-    opacity: 0.5;
-    text-align: center;
-    padding: 30px 10px;
-}
-
-.sn-box-item {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-left: 3px solid #e6ff3f;
-    border-radius: 8px;
-    padding: 10px 12px;
-    transition: background .2s, border-color .2s, transform .2s;
-    cursor: pointer;
-}
-
-body:not(.dark-mode) .sn-box-item {
-    background: rgba(0, 0, 0, 0.02);
-    border-color: rgba(0, 0, 0, 0.08);
-}
-
-.sn-box-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateX(2px);
-}
-
-body:not(.dark-mode) .sn-box-item:hover {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-.sn-box-item-text {
-    font-size: 12px;
-    line-height: 1.4;
-    color: var(--fg);
-    margin-bottom: 6px;
-    word-break: break-word;
-}
-
-.sn-box-item-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font: 9.5px "DM Mono", monospace;
-    color: var(--fg);
-    opacity: 0.65;
-}
-
-.sn-box-item-jump {
-    color: var(--accent, #e6ff3f);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 0;
-}
-
-body:not(.dark-mode) .sn-box-item-jump {
-    color: #0284c7;
-}
-
-.sn-box-item-jump:hover {
-    text-decoration: underline;
-}
-
 /* Sticky Note Card */
 .sn-card {
     position: absolute;
@@ -1758,7 +1569,10 @@ body:not(.dark-mode) .sn-box-item-jump {
     user-select: none;
     touch-action: none;
     z-index: 90;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.sn-card:not(.is-gathered) {
     animation: snPopIn .35s cubic-bezier(.16, 1, .3, 1);
 }
 
@@ -1788,15 +1602,16 @@ body:not(.dark-mode) .sn-card:hover {
 }
 
 /* Gathered into Box State:
-   Notes are completely absorbed inside the box drawer.
-   Zero notes appear on top of or around the box or canvas.
+   Notes are completely stored inside the notes box.
+   Zero notes appear on canvas or around the button.
 */
 .sn-card.is-gathered {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    transform: scale(0.6) translateY(20px) !important;
-    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease, visibility 0s linear 0.28s !important;
+    transform: scale(0.3) translateY(35px) !important;
+    animation: none !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0s linear 0.4s !important;
 }
 
 /* Card Jump Highlight Animation */
@@ -2093,13 +1908,6 @@ body:not(.dark-mode) .sn-btn-cancel {
     .sn-box-btn {
         padding: 8px 14px;
         font-size: 10px;
-    }
-    .sn-box-panel {
-        bottom: 68px;
-        right: 12px;
-        left: 12px;
-        width: auto;
-        max-height: 420px;
     }
     .sn-placement-banner {
         bottom: 68px;

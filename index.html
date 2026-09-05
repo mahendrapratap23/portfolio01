@@ -331,35 +331,18 @@
   <!-- Toast Notification -->
   <div class="toast" id="toast">Link copied to clipboard!</div>
 
-  <!-- Interactive Multiplayer Sticky Notes Layer, Dock & Notes Box -->
+  <!-- Interactive Multiplayer Sticky Notes Layer & Dock -->
   <div id="stickyNotesLayer" class="sn-notes-layer"></div>
   <div class="sn-dock" id="snDock">
     <button id="snTrigger" class="sn-trigger magnetic" aria-label="Leave a sticky note">
       <span class="sn-trigger-icon">📝</span>
       <span class="sn-trigger-text">Leave a note</span>
     </button>
-    <button id="snBoxTrigger" class="sn-box-btn magnetic" aria-label="Open notes box">
+    <button id="snBoxTrigger" class="sn-box-btn magnetic" aria-label="Toggle notes box" title="Click to scatter notes across portfolio">
       <span class="sn-box-icon">📦</span>
-      <span class="sn-box-text">Notes Box</span>
+      <span class="sn-box-text" id="snBoxText">Notes Box</span>
       <span class="sn-box-count" id="snBoxCount">0</span>
     </button>
-  </div>
-
-  <!-- Floating Glassmorphic Notes Box Drawer -->
-  <div id="snBoxPanel" class="sn-box-panel" aria-label="Notes Box Drawer">
-    <div class="sn-box-header">
-      <div class="sn-box-title">
-        <span>📦</span>
-        <span>Notes Box (<span id="snBoxListCount">0</span>)</span>
-      </div>
-      <div class="sn-box-actions">
-        <button id="snBoxScatterBtn" class="sn-box-scatter-btn" title="Scatter notes back to canvas">↗ Scatter</button>
-        <button id="snBoxCloseBtn" class="sn-box-close-btn" aria-label="Close notes box">✕</button>
-      </div>
-    </div>
-    <div class="sn-box-list" id="snBoxList">
-      <div class="sn-box-empty">No notes placed yet. Click "Leave a note" to stick one!</div>
-    </div>
   </div>
 
   <script src="script.js?v=2"></script>
@@ -611,16 +594,12 @@
     const stickyNotesLayer = document.getElementById('stickyNotesLayer');
     const snTrigger = document.getElementById('snTrigger');
     const snBoxTrigger = document.getElementById('snBoxTrigger');
+    const snBoxText = document.getElementById('snBoxText');
     const snBoxCount = document.getElementById('snBoxCount');
-    const snBoxPanel = document.getElementById('snBoxPanel');
-    const snBoxList = document.getElementById('snBoxList');
-    const snBoxListCount = document.getElementById('snBoxListCount');
-    const snBoxScatterBtn = document.getElementById('snBoxScatterBtn');
-    const snBoxCloseBtn = document.getElementById('snBoxCloseBtn');
     const toastEl = document.getElementById('toast');
 
     let isPlacementMode = false;
-    let isNotesBoxOpen = false;
+    let areNotesScattered = false; // Notes start inside note box as number by default
     let activeDraftEl = null;
     let snPlacementBanner = null;
     let toastTimer = null;
@@ -657,6 +636,24 @@
       toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
     };
 
+    // Filter helper to ensure strictly genuine visitor notes (purge mock/test data)
+    const isFakeNote = (id, data) => {
+      if (!data || typeof data !== 'object') return true;
+      if (typeof id === 'string' && (id.startsWith('note_seed_') || id.startsWith('note_hero_') || id.startsWith('note_ghumo_') || id.startsWith('note_trackly_') || id.startsWith('note_memora_') || id.startsWith('note_contact_'))) {
+        return true;
+      }
+      const text = (data.text || '').trim();
+      const author = (data.author || '').trim();
+      return (
+        text === 'Great hero presentation and aesthetic!' ||
+        text === 'Loving the Trackly mobile UI demo!' ||
+        text === 'Memora multimodal agent architecture is brilliant!' ||
+        author === 'Alex Designer' ||
+        author === 'AI Engineer' ||
+        author === 'Recruiter / Dev'
+      );
+    };
+
     // Local storage caching for genuine user notes only
     const getCachedNotes = () => {
       try {
@@ -664,7 +661,7 @@
         if (stored && typeof stored === 'object') {
           const genuine = {};
           Object.entries(stored).forEach(([k, v]) => {
-            if (!k.startsWith('note_seed_') && !k.startsWith('note_hero_') && !k.startsWith('note_ghumo_') && !k.startsWith('note_trackly_') && !k.startsWith('note_memora_') && !k.startsWith('note_contact_')) {
+            if (!isFakeNote(k, v)) {
               genuine[k] = v;
             }
           });
@@ -715,97 +712,52 @@
       '#4ade80'  // emerald green
     ];
 
-    // Update Notes Box UI drawer list & badge counts
+    // Update Notes Box button counter and toggle state
     const updateNotesBoxUI = () => {
       const count = activeNotes.size;
       if (snBoxCount) snBoxCount.textContent = count;
-      if (snBoxListCount) snBoxListCount.textContent = count;
+      if (snBoxText) {
+        snBoxText.textContent = areNotesScattered ? 'Gather Notes' : 'Notes Box';
+      }
+      if (snBoxTrigger) {
+        snBoxTrigger.classList.toggle('is-active', areNotesScattered);
+        snBoxTrigger.setAttribute(
+          'title',
+          areNotesScattered ? 'Click to gather notes back into box' : 'Click to scatter notes across portfolio'
+        );
+      }
+    };
 
-      if (!snBoxList) return;
-
-      if (count === 0) {
-        snBoxList.innerHTML = `<div class="sn-box-empty">No notes placed yet. Click "Leave a note" to stick one anywhere!</div>`;
+    // Toggle Notes Scatter:
+    // Notes start inside the note box represented as a number.
+    // Clicking the note box scatters all notes onto the canvas at once,
+    // and clicking again gathers them all back into the note box at once (and vice-versa).
+    const toggleNotesScatter = (forceState) => {
+      if (activeNotes.size === 0 && forceState !== false) {
+        showSnToast('No notes in box yet! Click "Leave a note" to pin one.');
         return;
       }
 
-      // Sort notes newest first
-      const sorted = Array.from(activeNotes.entries()).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+      const nextState = (typeof forceState === 'boolean') ? forceState : !areNotesScattered;
+      areNotesScattered = nextState;
 
-      snBoxList.innerHTML = sorted.map(([id, data]) => {
-        const safeText = document.createElement('div');
-        safeText.textContent = data.text || '';
-        const safeAuthor = document.createElement('div');
-        safeAuthor.textContent = data.author || 'Anonymous';
-
-        return `
-          <div class="sn-box-item" data-note-id="${id}" style="border-left-color: ${data.color || '#e6ff3f'};">
-            <div class="sn-box-item-text">${safeText.innerHTML}</div>
-            <div class="sn-box-item-meta">
-              <span>${safeAuthor.innerHTML} · ${formatRelativeTime(data.timestamp)}</span>
-              <button class="sn-box-item-jump" data-note-id="${id}">📍 Jump to section</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      // Bind jump handlers
-      snBoxList.querySelectorAll('.sn-box-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-          const noteId = item.getAttribute('data-note-id');
-          if (noteId) jumpToNote(noteId);
-        });
-      });
-    };
-
-    // Toggle Notes Box (Gather all notes into box or scatter them back to canvas)
-    const toggleNotesBox = (forceState) => {
-      const nextState = (typeof forceState === 'boolean') ? forceState : !isNotesBoxOpen;
-      isNotesBoxOpen = nextState;
-
-      if (isNotesBoxOpen && isPlacementMode) {
-        setPlacementMode(false);
-      }
-
-      if (snBoxTrigger) snBoxTrigger.classList.toggle('is-active', isNotesBoxOpen);
-      if (snBoxPanel) snBoxPanel.classList.toggle('is-open', isNotesBoxOpen);
-
-      // Smooth Gather / Scatter transition on cards:
-      // When open: cards fold and vanish cleanly into the box, zero clutter on canvas
-      // When closed: cards smoothly un-fold back at their exact canvas positions
       if (stickyNotesLayer) {
         const cards = stickyNotesLayer.querySelectorAll('.sn-card');
         cards.forEach((card) => {
-          if (isNotesBoxOpen) {
-            card.classList.add('is-gathered');
-          } else {
+          if (areNotesScattered) {
             card.classList.remove('is-gathered');
+          } else {
+            card.classList.add('is-gathered');
           }
         });
       }
 
       updateNotesBoxUI();
-    };
 
-    // Jump to specific note on the canvas
-    const jumpToNote = (noteId) => {
-      const data = activeNotes.get(noteId);
-      const card = stickyNotesLayer ? stickyNotesLayer.querySelector(`.sn-card[data-note-id="${noteId}"]`) : null;
-
-      // Close box to scatter notes back to canvas
-      toggleNotesBox(false);
-
-      if (data && typeof data.yAbsolute === 'number') {
-        const targetScroll = Math.max(0, data.yAbsolute - 140);
-        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-      }
-
-      if (card) {
-        setTimeout(() => {
-          card.classList.remove('sn-highlight');
-          void card.offsetWidth; // force reflow
-          card.classList.add('sn-highlight');
-          setTimeout(() => card.classList.remove('sn-highlight'), 2000);
-        }, 320);
+      if (areNotesScattered) {
+        showSnToast(`Scattered ${activeNotes.size} note${activeNotes.size === 1 ? '' : 's'} across portfolio! ✨`);
+      } else {
+        showSnToast('All notes gathered into box! 📦');
       }
     };
 
@@ -815,9 +767,6 @@
       if (activeDraftEl) {
         activeDraftEl.remove();
         activeDraftEl = null;
-      }
-      if (isPlacementMode && isNotesBoxOpen) {
-        toggleNotesBox(false);
       }
 
       document.body.classList.toggle('sn-placement-active', isPlacementMode);
@@ -855,41 +804,15 @@
       snBoxTrigger.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        toggleNotesBox();
+        toggleNotesScatter();
       });
     }
-
-    if (snBoxScatterBtn) {
-      snBoxScatterBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleNotesBox(false);
-        showSnToast('Notes scattered back to canvas! ↗');
-      });
-    }
-
-    if (snBoxCloseBtn) {
-      snBoxCloseBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleNotesBox(false);
-      });
-    }
-
-    // Close Notes Box when clicking outside
-    document.addEventListener('click', (e) => {
-      if (isNotesBoxOpen && !e.target.closest('#snBoxPanel') && !e.target.closest('#snBoxTrigger')) {
-        toggleNotesBox(false);
-      }
-    });
 
     // Cancel on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         if (isPlacementMode) {
           setPlacementMode(false);
-        } else if (isNotesBoxOpen) {
-          toggleNotesBox(false);
         } else if (activeDraftEl) {
           activeDraftEl.remove();
           activeDraftEl = null;
@@ -1002,6 +925,13 @@
         activeNotes.set(noteId, noteData);
         updateCachedNote(noteId, noteData);
 
+        // Scatter notes so the newly pinned note is visible on canvas
+        areNotesScattered = true;
+        if (stickyNotesLayer) {
+          const cards = stickyNotesLayer.querySelectorAll('.sn-card');
+          cards.forEach(c => c.classList.remove('is-gathered'));
+        }
+
         // Optimistically render note immediately on canvas
         renderNote(noteId, noteData);
         updateNotesBoxUI();
@@ -1017,7 +947,7 @@
     // Full-document canvas click interceptor for Placement Mode
     document.addEventListener('click', (e) => {
       if (!isPlacementMode) return;
-      if (e.target.closest('#snDock') || e.target.closest('#snBoxPanel') || e.target.closest('.sn-draft-card')) return;
+      if (e.target.closest('#snDock') || e.target.closest('.sn-draft-card')) return;
 
       e.preventDefault();
       e.stopPropagation();
@@ -1041,8 +971,14 @@
         card = document.createElement('div');
         card.className = 'sn-card';
         card.setAttribute('data-note-id', noteId);
-        if (isNotesBoxOpen) card.classList.add('is-gathered');
+        if (!areNotesScattered) card.classList.add('is-gathered');
         stickyNotesLayer.appendChild(card);
+      } else {
+        if (!areNotesScattered) {
+          card.classList.add('is-gathered');
+        } else {
+          card.classList.remove('is-gathered');
+        }
       }
 
       const docWidth = document.documentElement.clientWidth;
@@ -1163,7 +1099,7 @@
       if (notesData && typeof notesData === 'object') {
         Object.entries(notesData).forEach(([id, item]) => {
           // Purge any fake/seed test notes from Firebase so only genuine notes exist
-          if (id.startsWith('note_seed_') || id.startsWith('note_hero_') || id.startsWith('note_ghumo_') || id.startsWith('note_trackly_') || id.startsWith('note_memora_') || id.startsWith('note_contact_')) {
+          if (isFakeNote(id, item)) {
             remove(ref(db, `portfolio/notes/${id}`)).catch(() => {});
             return;
           }
