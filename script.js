@@ -118,17 +118,17 @@ const projectData = {
     tech: 'HTML5 Canvas • JavaScript (ES6+) • Firebase Firestore • Firebase Realtime DB • CSS3',
     tags: ['HTML5 Canvas', 'JavaScript (ES6+)', 'Firebase Firestore', 'Firebase Realtime DB', 'CSS3'],
     tag: 'FEATURED EXPERIMENT',
-    desc: 'An infinite, borderless 2D digital plane where users place anonymous thoughts at spatial coordinates, watch notes decay into ash unless saved (+2h / -10% fire mechanic), and track live ghost cursors across a procedural glowing blue planetary horizon.',
-    description: 'An infinite, borderless 2D digital plane where users place anonymous thoughts at spatial coordinates, watch notes decay into ash unless saved (+2h / -10% fire mechanic), and track live ghost cursors across a procedural glowing blue planetary horizon.',
+    desc: 'An infinite, borderless 2D digital plane where users place anonymous thoughts at spatial coordinates, watch notes decay into ash unless saved (+2h / -10% fire mechanic), and track authentic live ghost cursors across a procedural glowing blue horizon.',
+    description: 'An infinite, borderless 2D digital plane where users place anonymous thoughts at spatial coordinates, watch notes decay into ash unless saved (+2h / -10% fire mechanic), and track authentic live ghost cursors across a procedural glowing blue horizon.',
     highlights: [
-      'Infinite borderless 2D coordinate plane with smooth pan, zoom, and spatial coordinate navigation.',
-      'Ephemeral graffiti wall with note decay physics and interactive fire saving mechanic (+2h / -10% fire).',
-      'Real-time multiplayer presence tracking live ghost cursors across a procedural glowing blue planetary horizon.',
-      'Decoupled Firebase architecture combining Realtime Database for live cursors and Cloud Firestore for persistent spatial notes.'
+      'Endless 2D pan with inertia damping, cursor-centric zoom (0.1x to 3.0x), and frustum culling at 60 FPS.',
+      'Ephemeral graffiti notes with decay physics, ash particle bursts, and atomic +2h / -10% life saving mechanics.',
+      '100% authentic realtime multiplayer presence tracking live ghost cursors with smooth linear interpolation (lerping).',
+      'Decoupled Firebase architecture combining Realtime Database for live presence and Cloud Firestore for persistent spatial notes.'
     ],
     repo: 'https://github.com/mahendrapratap23/Boundless-Canvas',
     github: 'https://github.com/mahendrapratap23/Boundless-Canvas',
-    liveUrl: 'https://boundless-canvas.web.app',
+    liveUrl: 'https://boundless-canvas.vercel.app',
     featured: true
   }
 };

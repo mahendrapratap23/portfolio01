@@ -39,7 +39,7 @@
 | **02 — Trackly** | TypeScript, Chart Engine, Firebase | Minimal visual metrics tracker, habit streaks, data persistence & CSV export. | [View Repo ↗](https://github.com/mahendrapratap23/trackly) |
 | **03 — AI & ML Practical Suite** | Python, Jupyter, Scikit-learn, Pandas | Practical ML models written from scratch, DAA algorithms & model evaluation. | [View Repo ↗](https://github.com/mahendrapratap23/college-practical-codes) |
 | **04 — MEMORA** *(In Active Build)* | Python, OpenAI, Pydantic, CLI REPL | Personal AI Assistant & Autonomous Agent architecture with modular LLM provider interfaces. | [View Repo ↗](https://github.com/mahendrapratap23/MEMORA) |
-| **05 — The Boundless Canvas** | HTML5 Canvas, JS, Firebase (RTDB + Firestore) | Infinite multiplayer 2D void, live ghost cursors & ephemeral decaying graffiti wall. | [View Repo ↗](https://github.com/mahendrapratap23/Boundless-Canvas) |
+| **05 — The Boundless Canvas** | HTML5 Canvas, JS, Firebase (RTDB + Firestore) | Infinite multiplayer 2D void, live ghost cursors & ephemeral decaying graffiti wall. | [Live Demo ↗](https://boundless-canvas.vercel.app) • [View Repo ↗](https://github.com/mahendrapratap23/Boundless-Canvas) |
 
 ---
 
