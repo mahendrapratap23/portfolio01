@@ -178,6 +178,43 @@
         </div>
       </article>
 
+      <article class="project project-large" data-project="boundless-canvas">
+        <div class="project-media media-five">
+          <div class="canvas-void-card">
+            <div class="canvas-void-top">
+              <span class="canvas-void-tag">MULTIPLAYER 2D VOID</span>
+              <span class="canvas-void-status"><i class="pulse-dot-blue"></i> LIVE CANVAS</span>
+            </div>
+            <div class="canvas-void-hero">
+              <span class="canvas-void-prompt">&gt; void.connect({ realtime: true })</span>
+              <strong class="canvas-void-title">BOUND<br>LESS</strong>
+            </div>
+            <div class="canvas-void-bottom">
+              <span>CANVAS • FIRESTORE • REALTIME DB • GHOST CURSORS</span>
+              <small>v1.0 SHIPPED ↗</small>
+            </div>
+          </div>
+        </div>
+        <div class="project-meta">
+          <div><b>05</b>
+            <h2>The Boundless Canvas <span class="badge-void">● LIVE VOID</span> <span class="arrow">↗</span></h2>
+          </div>
+          <div class="project-meta-right">
+            <span>Infinite 2D Void / HTML5 Canvas / Firebase Multi-DB</span>
+            <div class="project-reactions">
+              <button class="reaction-pill magnetic" data-project="boundless-canvas" data-type="fire" aria-label="Fire reaction for The Boundless Canvas">
+                <span class="reaction-emoji">🔥</span>
+                <span class="reaction-count">582</span>
+              </button>
+              <button class="reaction-pill magnetic" data-project="boundless-canvas" data-type="rocket" aria-label="Rocket reaction for The Boundless Canvas">
+                <span class="reaction-emoji">🚀</span>
+                <span class="reaction-count">567</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </section>
 
     <section id="metrics" class="metrics-section">
@@ -321,6 +358,7 @@
         </div>
       </div>
       <div class="modal-footer">
+        <a id="modalLiveBtn" href="#" target="_blank" rel="noopener noreferrer" class="modal-btn primary" style="display: none;">Live Demo ↗</a>
         <a id="modalRepoBtn" href="#" target="_blank" rel="noopener noreferrer" class="modal-btn primary">View GitHub
           Repository ↗</a>
         <button class="modal-btn secondary" id="modalCloseBtn">Close Preview</button>
@@ -460,7 +498,8 @@
       'ghumo-ai': { fire: 538, rocket: 519 },
       'trackly': { fire: 526, rocket: 542 },
       'college-practical-codes': { fire: 515, rocket: 508 },
-      'memora': { fire: 574, rocket: 561 }
+      'memora': { fire: 574, rocket: 561 },
+      'boundless-canvas': { fire: 582, rocket: 567 }
     };
 
     const getBaseReaction = (project, type) => {

@@ -537,6 +537,148 @@ body {
     }
 }
 
+/* 05 — The Boundless Canvas (Infinite 2D Void) */
+.media-five {
+    background: radial-gradient(circle at 50% 120%, #1e3a8a 0%, #070b14 65%);
+    min-height: 72vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.canvas-void-card {
+    background: #0b0f19;
+    color: #f2f0ea;
+    width: min(440px, 75%);
+    aspect-ratio: 4/5;
+    padding: 36px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 24px 24px 0 rgba(0, 0, 0, .35);
+    border: 1px solid rgba(56, 189, 248, .22);
+    transform: rotate(3deg);
+    transition: transform .7s cubic-bezier(.16, 1, .3, 1), box-shadow .7s ease, border-color .7s ease;
+    position: relative;
+}
+
+.project:hover .canvas-void-card {
+    transform: rotate(0) translateY(-14px) scale(1.03);
+    box-shadow: 32px 32px 0 rgba(0, 0, 0, .45);
+    border-color: rgba(56, 189, 248, .55);
+}
+
+.canvas-void-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    padding-bottom: 14px;
+}
+
+.canvas-void-tag {
+    font: 10px "DM Mono";
+    letter-spacing: .1em;
+    color: #38bdf8;
+    text-transform: uppercase;
+}
+
+.canvas-void-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font: 10px "DM Mono";
+    color: #38bdf8;
+    letter-spacing: .06em;
+    background: rgba(56, 189, 248, .12);
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(56, 189, 248, .3);
+}
+
+.pulse-dot-blue {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #38bdf8;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #38bdf8;
+    animation: blinkDotBlue 1.4s infinite ease-in-out;
+}
+
+@keyframes blinkDotBlue {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: .3;
+        transform: scale(.7);
+    }
+}
+
+.canvas-void-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.canvas-void-prompt {
+    font: 12px "DM Mono";
+    color: #38bdf8;
+    letter-spacing: .04em;
+    opacity: .95;
+}
+
+.canvas-void-title {
+    font-size: clamp(48px, 7.5vw, 96px);
+    line-height: .78;
+    letter-spacing: -.08em;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 35px rgba(56, 189, 248, 0.35);
+}
+
+.canvas-void-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    padding-top: 14px;
+}
+
+.canvas-void-bottom span {
+    font: 10px "DM Mono";
+    color: #94a3b8;
+    letter-spacing: .04em;
+    max-width: 70%;
+    line-height: 1.4;
+}
+
+.canvas-void-bottom small {
+    font: 10px "DM Mono";
+    color: #38bdf8;
+    letter-spacing: .06em;
+    font-weight: 600;
+}
+
+.badge-void {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font: 9px "DM Mono";
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    background: #38bdf8;
+    color: #0b1120;
+    padding: 3px 8px;
+    border-radius: 100px;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(56, 189, 248, .45);
+}
+
 .metrics-section {
     padding: 8vw 8vw
 }
@@ -1069,6 +1211,15 @@ body {
 
     .memora-title {
         font-size: clamp(42px, 11vw, 70px);
+    }
+
+    .canvas-void-card {
+        width: 80vw;
+        padding: 24px;
+    }
+
+    .canvas-void-title {
+        font-size: clamp(38px, 10vw, 64px);
     }
 
     .about-grid {

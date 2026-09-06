@@ -111,6 +111,25 @@ const projectData = {
       'Multi-phase agent architecture engineered for semantic memory, vector databases, and autonomous tool calling.'
     ],
     repo: 'https://github.com/mahendrapratap23/MEMORA'
+  },
+  'boundless-canvas': {
+    title: 'The Boundless Canvas — Infinite Multiplayer Digital Void',
+    tagline: 'Infinite Multiplayer Digital Void & Ephemeral Graffiti Wall',
+    tech: 'HTML5 Canvas • JavaScript (ES6+) • Firebase Firestore • Firebase Realtime DB • CSS3',
+    tags: ['HTML5 Canvas', 'JavaScript (ES6+)', 'Firebase Firestore', 'Firebase Realtime DB', 'CSS3'],
+    tag: 'FEATURED EXPERIMENT',
+    desc: 'An infinite, borderless 2D digital plane where users place anonymous thoughts at spatial coordinates, watch notes decay into ash unless saved (+2h / -10% fire mechanic), and track live ghost cursors across a procedural glowing blue planetary horizon.',
+    description: 'An infinite, borderless 2D digital plane where users place anonymous thoughts at spatial coordinates, watch notes decay into ash unless saved (+2h / -10% fire mechanic), and track live ghost cursors across a procedural glowing blue planetary horizon.',
+    highlights: [
+      'Infinite borderless 2D coordinate plane with smooth pan, zoom, and spatial coordinate navigation.',
+      'Ephemeral graffiti wall with note decay physics and interactive fire saving mechanic (+2h / -10% fire).',
+      'Real-time multiplayer presence tracking live ghost cursors across a procedural glowing blue planetary horizon.',
+      'Decoupled Firebase architecture combining Realtime Database for live cursors and Cloud Firestore for persistent spatial notes.'
+    ],
+    repo: 'https://github.com/mahendrapratap23/Boundless-Canvas',
+    github: 'https://github.com/mahendrapratap23/Boundless-Canvas',
+    liveUrl: 'https://boundless-canvas.web.app',
+    featured: true
   }
 };
 
@@ -137,6 +156,18 @@ const openModal = (projectId) => {
   modalTech.textContent = data.tech;
   modalDesc.textContent = data.desc;
   modalRepoBtn.href = data.repo;
+
+  const modalLiveBtn = document.getElementById('modalLiveBtn');
+  if (modalLiveBtn) {
+    if (data.liveUrl) {
+      modalLiveBtn.href = data.liveUrl;
+      modalLiveBtn.style.display = 'inline-flex';
+      modalRepoBtn.className = 'modal-btn secondary';
+    } else {
+      modalLiveBtn.style.display = 'none';
+      modalRepoBtn.className = 'modal-btn primary';
+    }
+  }
 
   modalHighlights.innerHTML = data.highlights.map(h => `<li>${h}</li>`).join('');
 
