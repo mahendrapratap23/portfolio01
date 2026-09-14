@@ -130,6 +130,25 @@ const projectData = {
     github: 'https://github.com/mahendrapratap23/Boundless-Canvas',
     liveUrl: 'https://boundless-canvas.vercel.app',
     featured: true
+  },
+  'airqr': {
+    title: 'AirQR — Zero-Install Screen-to-Mobile WebRTC Bridge',
+    tagline: 'Zero-Install, Zero-Cloud-Footprint, Screen-to-Mobile WebRTC Data Bridge',
+    tech: 'WebRTC DataChannels • STUN/NAT Traversal • JavaScript (ES6+) • HTML5 • Ephemeral P2P',
+    tags: ['WebRTC DataChannels', 'STUN/NAT Traversal', 'JavaScript (ES6+)', 'HTML5', 'Ephemeral P2P'],
+    tag: 'FEATURED PROTOCOL • LIVE APP',
+    desc: 'A zero-install, zero-cloud-footprint peer-to-peer data bridge that streams links, raw text, images, and files up to 50MB directly from your desktop screen to your mobile device in-memory via encrypted WebRTC DataChannels.',
+    description: 'A zero-install, zero-cloud-footprint peer-to-peer data bridge that streams links, raw text, images, and files up to 50MB directly from your desktop screen to your mobile device in-memory via encrypted WebRTC DataChannels.',
+    highlights: [
+      '100% Zero-Install & universal cross-platform transfer across iOS, Android, macOS, Windows, and Linux via standard web browsers.',
+      'True volatile memory architecture with zero cloud storage, zero server database, and automatic teardown on session exit.',
+      'Encrypted WebRTC DataChannel transport using Google & Twilio STUN/NAT traversal with DTLS 1.2/1.3 protocol security.',
+      'High-throughput binary chunker slicing files into 16KB ArrayBuffer streams with backpressure control and live transfer metrics.'
+    ],
+    repo: 'https://github.com/mahendrapratap23/airqr',
+    github: 'https://github.com/mahendrapratap23/airqr',
+    liveUrl: 'https://airqr-cyan.vercel.app',
+    featured: true
   }
 };
 
