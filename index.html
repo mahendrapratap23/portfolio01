@@ -4,24 +4,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Mahendra Pratap — CSE Student, AI/ML Developer & Full Stack Engineer Portfolio. Selected projects, open source, and visual digital experiences.">
   <title>MAHENDRA PRATAP — Developer &amp; Visual Thinker</title>
+  <meta name="description"
+    content="Mahendra Pratap — CSE (AI &amp; ML) Student, Full Stack Engineer &amp; Systems Developer. Featured projects in WebRTC P2P protocols, autonomous AI agents, multiplayer canvases, and minimal web applications.">
+  <link rel="canonical" href="https://portfolio01-three-ruby.vercel.app/">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://portfolio01-three-ruby.vercel.app/">
+  <meta property="og:title" content="MAHENDRA PRATAP — Developer &amp; Visual Thinker">
+  <meta property="og:description"
+    content="Computer Science &amp; AI Engineering student crafting intelligent web products, graph tracking platforms, ML algorithms, and minimalist digital experiences.">
+  <meta property="og:image" content="https://portfolio01-three-ruby.vercel.app/profile.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MAHENDRA PRATAP — Developer &amp; Visual Thinker">
+  <meta name="twitter:description"
+    content="Computer Science &amp; AI Engineering student crafting intelligent web products, graph tracking platforms, ML algorithms, and minimalist digital experiences.">
+  <meta name="twitter:image" content="https://portfolio01-three-ruby.vercel.app/profile.jpg">
+
+  <!-- Favicon (Inline SVG Monogram) -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ctext x='16' y='21' font-family='system-ui,sans-serif' font-size='14' font-weight='900' fill='%23e6ff3f' text-anchor='middle'%3EMP%3C/text%3E%3C/svg%3E">
+
+  <!-- Typography & Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 
 <body>
-  <div class="cursor"></div>
-  <div class="noise"></div>
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
 
   <header class="nav">
     <a class="logo magnetic" href="#">MP<span>®</span></a>
-    <nav>
+    <nav aria-label="Main Navigation">
       <a href="#work">Work</a>
       <a href="#metrics">Impact</a>
       <a href="#about">About</a>
@@ -31,11 +53,11 @@
     <div class="nav-actions">
       <div class="view-counter-badge magnetic" id="viewCounterBadge" title="Live Portfolio Views">
         <span class="view-counter-dot" aria-hidden="true"></span>
-        <span class="view-counter-num" id="viewCount">1,500</span>
+        <span class="view-counter-num" id="viewCount">—</span>
         <span class="view-counter-label">VIEWS</span>
       </div>
       <a class="resume-nav-btn magnetic" href="Mahendra_Pratap_Resume.pdf" download="Mahendra_Pratap_Resume.pdf"
-        target="_blank">📄 Resume PDF</a>
+        target="_blank">Resume (PDF)</a>
       <button class="theme-toggle magnetic" id="themeBtn" aria-label="Toggle theme mode">DARK MODE</button>
       <a class="availability magnetic" href="https://www.linkedin.com/in/mahendra-pratap-601003288" target="_blank"
         rel="noopener noreferrer"><i></i> Available for work</a>
@@ -47,11 +69,11 @@
       <div class="hero-kicker">MARWADI UNIVERSITY / B.TECH CSE (AI &amp; ML) / 2024—2028</div>
       <h1>Building,<br>learning &amp;<br><em>shipping.</em></h1>
       <p class="hero-copy">Computer Science &amp; AI Engineering student crafting intelligent web products, graph
-        tracking platforms, ML algorithms and minimalist digital interfaces.</p>
+        tracking platforms, ML algorithms, and minimalist digital interfaces.</p>
       <div class="hero-actions">
         <a class="scroll magnetic" href="#work">↓ Explore projects &amp; code</a>
         <a class="resume-hero-btn magnetic" href="Mahendra_Pratap_Resume.pdf" download="Mahendra_Pratap_Resume.pdf"
-          target="_blank">📄 Download Resume PDF ↗</a>
+          target="_blank">Download Resume (PDF) ↗</a>
         <a class="contact-cta magnetic" href="#contact">Get in touch ↗</a>
       </div>
       <div class="hero-orbit" aria-hidden="true">
@@ -65,7 +87,8 @@
         <span>CLICK FOR CASE STUDY &amp; REPO</span>
       </div>
 
-      <article class="project project-large" data-project="ghumo-ai">
+      <!-- Project 01: Ghumo AI -->
+      <article class="project project-large" data-project="ghumo-ai" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="project-media media-one">
           <div class="poster poster-a">
             <span>GHUMO<br>AI</span>
@@ -73,80 +96,89 @@
           </div>
         </div>
         <div class="project-meta">
-          <div><b>01</b>
-            <h2>Ghumo AI <span class="arrow">↗</span></h2>
+          <div>
+            <b>01</b>
+            <h2>Ghumo AI <span class="arrow" aria-hidden="true">↗</span></h2>
           </div>
           <div class="project-meta-right">
             <span>AI Travel Planner / TypeScript / Maps API</span>
-            <div class="project-reactions">
-              <button class="reaction-pill magnetic" data-project="ghumo-ai" data-type="fire" aria-label="Fire reaction for Ghumo AI">
-                <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">538</span>
-              </button>
-              <button class="reaction-pill magnetic" data-project="ghumo-ai" data-type="rocket" aria-label="Rocket reaction for Ghumo AI">
-                <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">519</span>
-              </button>
+            <div class="project-meta-details">
+              <div class="project-tags">
+                <span class="tag-badge">TypeScript</span>
+                <span class="tag-badge">React</span>
+                <span class="tag-badge">Maps API</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://github.com/mahendrapratap23/ghumo-ai" target="_blank" rel="noopener noreferrer"
+                  class="project-pill-link" aria-label="View Ghumo AI on GitHub">View Repo ↗</a>
+              </div>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="project project-large" data-project="trackly">
+      <!-- Project 02: Trackly -->
+      <article class="project project-large" data-project="trackly" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="project-media media-two">
           <div class="type-art">TRACK<br><strong>LY</strong></div>
         </div>
         <div class="project-meta">
-          <div><b>02</b>
-            <h2>Trackly <span class="arrow">↗</span></h2>
+          <div>
+            <b>02</b>
+            <h2>Trackly <span class="arrow" aria-hidden="true">↗</span></h2>
           </div>
           <div class="project-meta-right">
             <span>Universal Analytics / TypeScript / Firebase</span>
-            <div class="project-reactions">
-              <button class="reaction-pill magnetic" data-project="trackly" data-type="fire" aria-label="Fire reaction for Trackly">
-                <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">526</span>
-              </button>
-              <button class="reaction-pill magnetic" data-project="trackly" data-type="rocket" aria-label="Rocket reaction for Trackly">
-                <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">542</span>
-              </button>
+            <div class="project-meta-details">
+              <div class="project-tags">
+                <span class="tag-badge">TypeScript</span>
+                <span class="tag-badge">Chart Engine</span>
+                <span class="tag-badge">Firebase</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://github.com/mahendrapratap23/trackly" target="_blank" rel="noopener noreferrer"
+                  class="project-pill-link" aria-label="View Trackly on GitHub">View Repo ↗</a>
+              </div>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="project project-large" data-project="college-practical-codes">
+      <!-- Project 03: AI & ML Practical Suite -->
+      <article class="project project-large" data-project="college-practical-codes" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="project-media media-three">
           <div class="record"><span>AI / ML</span></div>
           <div class="music-title">ALGO<br>LAB</div>
         </div>
         <div class="project-meta">
-          <div><b>03</b>
-            <h2>AI &amp; ML Practical Suite <span class="arrow">↗</span></h2>
+          <div>
+            <b>03</b>
+            <h2>AI &amp; ML Practical Suite <span class="arrow" aria-hidden="true">↗</span></h2>
           </div>
           <div class="project-meta-right">
             <span>Machine Learning / Python / DAA Algorithms</span>
-            <div class="project-reactions">
-              <button class="reaction-pill magnetic" data-project="college-practical-codes" data-type="fire" aria-label="Fire reaction for AI &amp; ML Practical Suite">
-                <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">515</span>
-              </button>
-              <button class="reaction-pill magnetic" data-project="college-practical-codes" data-type="rocket" aria-label="Rocket reaction for AI &amp; ML Practical Suite">
-                <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">508</span>
-              </button>
+            <div class="project-meta-details">
+              <div class="project-tags">
+                <span class="tag-badge">Python</span>
+                <span class="tag-badge">Scikit-learn</span>
+                <span class="tag-badge">Jupyter</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://github.com/mahendrapratap23/college-practical-codes" target="_blank"
+                  rel="noopener noreferrer" class="project-pill-link" aria-label="View Practical Suite on GitHub">View Repo ↗</a>
+              </div>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="project project-large" data-project="memora">
+      <!-- Project 04: MEMORA -->
+      <article class="project project-large" data-project="memora" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="project-media media-four">
           <div class="memora-card">
             <div class="memora-top">
               <span class="memora-tag">AI AGENT ENGINE</span>
-              <span class="memora-status"><i class="pulse-dot"></i> CURRENTLY BUILDING</span>
+              <span class="memora-status"><i class="pulse-dot"></i> ACTIVE BUILD</span>
             </div>
             <div class="memora-hero">
               <span class="memora-prompt">&gt; memora --init assistant</span>
@@ -159,31 +191,35 @@
           </div>
         </div>
         <div class="project-meta">
-          <div><b>04</b>
-            <h2>MEMORA <span class="badge-building">● IN ACTIVE BUILD</span> <span class="arrow">↗</span></h2>
+          <div>
+            <b>04</b>
+            <h2>MEMORA <span class="badge-building">● ACTIVE BUILD</span> <span class="arrow" aria-hidden="true">↗</span></h2>
           </div>
           <div class="project-meta-right">
             <span>Personal AI Assistant &amp; Autonomous Agent / Python / LLM Architecture</span>
-            <div class="project-reactions">
-              <button class="reaction-pill magnetic" data-project="memora" data-type="fire" aria-label="Fire reaction for MEMORA">
-                <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">574</span>
-              </button>
-              <button class="reaction-pill magnetic" data-project="memora" data-type="rocket" aria-label="Rocket reaction for MEMORA">
-                <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">561</span>
-              </button>
+            <div class="project-meta-details">
+              <div class="project-tags">
+                <span class="tag-badge">Python</span>
+                <span class="tag-badge">Pydantic</span>
+                <span class="tag-badge">LLM Interfaces</span>
+                <span class="tag-badge">Pytest 100% Mocked</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://github.com/mahendrapratap23/MEMORA" target="_blank" rel="noopener noreferrer"
+                  class="project-pill-link" aria-label="View MEMORA on GitHub">View Repo ↗</a>
+              </div>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="project project-large" data-project="boundless-canvas">
+      <!-- Project 05: The Boundless Canvas -->
+      <article class="project project-large" data-project="boundless-canvas" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="project-media media-five">
           <div class="canvas-void-card">
             <div class="canvas-void-top">
               <span class="canvas-void-tag">MULTIPLAYER 2D VOID</span>
-              <span class="canvas-void-status"><i class="pulse-dot-blue"></i> LIVE CANVAS</span>
+              <span class="canvas-void-status"><i class="pulse-dot-blue"></i> LIVE VOID</span>
             </div>
             <div class="canvas-void-hero">
               <span class="canvas-void-prompt">&gt; void.connect({ realtime: true })</span>
@@ -196,26 +232,32 @@
           </div>
         </div>
         <div class="project-meta">
-          <div><b>05</b>
-            <h2>The Boundless Canvas <span class="badge-void">● LIVE VOID</span> <span class="arrow">↗</span></h2>
+          <div>
+            <b>05</b>
+            <h2>The Boundless Canvas <span class="badge-void">● LIVE APP</span> <span class="arrow" aria-hidden="true">↗</span></h2>
           </div>
           <div class="project-meta-right">
             <span>Infinite 2D Void / HTML5 Canvas / Firebase Multi-DB</span>
-            <div class="project-reactions">
-              <button class="reaction-pill magnetic" data-project="boundless-canvas" data-type="fire" aria-label="Fire reaction for The Boundless Canvas">
-                <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">582</span>
-              </button>
-              <button class="reaction-pill magnetic" data-project="boundless-canvas" data-type="rocket" aria-label="Rocket reaction for The Boundless Canvas">
-                <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">567</span>
-              </button>
+            <div class="project-meta-details">
+              <div class="project-tags">
+                <span class="tag-badge">HTML5 Canvas</span>
+                <span class="tag-badge">Realtime DB</span>
+                <span class="tag-badge">Firestore</span>
+                <span class="tag-badge">60 FPS</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://boundless-canvas.vercel.app" target="_blank" rel="noopener noreferrer"
+                  class="project-pill-link live" aria-label="Open Live Demo of The Boundless Canvas">Live Demo ↗</a>
+                <a href="https://github.com/mahendrapratap23/Boundless-Canvas" target="_blank" rel="noopener noreferrer"
+                  class="project-pill-link" aria-label="View The Boundless Canvas on GitHub">Repo ↗</a>
+              </div>
             </div>
           </div>
         </div>
       </article>
 
-      <article class="project project-large" data-project="airqr">
+      <!-- Project 06: AirQR -->
+      <article class="project project-large" data-project="airqr" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="project-media media-six">
           <div class="airqr-card">
             <div class="airqr-top">
@@ -233,20 +275,25 @@
           </div>
         </div>
         <div class="project-meta">
-          <div><b>06</b>
-            <h2>AirQR <span class="badge-airqr">● LIVE P2P</span> <span class="arrow">↗</span></h2>
+          <div>
+            <b>06</b>
+            <h2>AirQR <span class="badge-airqr">● LIVE P2P</span> <span class="arrow" aria-hidden="true">↗</span></h2>
           </div>
           <div class="project-meta-right">
             <span>Ephemeral Screen-to-Mobile P2P Data Bridge / WebRTC DataChannel / Zero-Cloud</span>
-            <div class="project-reactions">
-              <button class="reaction-pill magnetic" data-project="airqr" data-type="fire" aria-label="Fire reaction for AirQR">
-                <span class="reaction-emoji">🔥</span>
-                <span class="reaction-count">589</span>
-              </button>
-              <button class="reaction-pill magnetic" data-project="airqr" data-type="rocket" aria-label="Rocket reaction for AirQR">
-                <span class="reaction-emoji">🚀</span>
-                <span class="reaction-count">578</span>
-              </button>
+            <div class="project-meta-details">
+              <div class="project-tags">
+                <span class="tag-badge">WebRTC</span>
+                <span class="tag-badge">DataChannels</span>
+                <span class="tag-badge">In-Memory P2P</span>
+                <span class="tag-badge">Zero-Cloud</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://airqr-cyan.vercel.app/" target="_blank" rel="noopener noreferrer"
+                  class="project-pill-link live" aria-label="Open Live Demo of AirQR">Live Demo ↗</a>
+                <a href="https://github.com/mahendrapratap23/airqr" target="_blank" rel="noopener noreferrer"
+                  class="project-pill-link" aria-label="View AirQR on GitHub">Repo ↗</a>
+              </div>
             </div>
           </div>
         </div>
@@ -254,6 +301,7 @@
 
     </section>
 
+    <!-- Engineering Impact & Overview -->
     <section id="metrics" class="metrics-section">
       <div class="section-head">
         <span>02 — IMPACT &amp; NUMBERS</span>
@@ -263,8 +311,12 @@
         <div class="metric-card">
           <span class="metric-num">B.Tech</span>
           <span class="metric-label">Marwadi University</span>
-          <p>Computer Science Engineering specializing in Artificial Intelligence &amp; Machine Learning (2024–2028).
-          </p>
+          <p>Computer Science Engineering specializing in Artificial Intelligence &amp; Machine Learning (2024–2028).</p>
+        </div>
+        <div class="metric-card">
+          <span class="metric-num">6</span>
+          <span class="metric-label">Shipped Products</span>
+          <p>Peer-to-peer WebRTC data bridges, infinite multiplayer 2D voids, and autonomous AI agents.</p>
         </div>
         <div class="metric-card">
           <span class="metric-num">7+</span>
@@ -272,9 +324,9 @@
           <p>Oracle Certified AI Foundations, IBM AI Fundamentals, Cisco CCNA Networking &amp; Cloud.</p>
         </div>
         <div class="metric-card">
-          <span class="metric-num">100%</span>
-          <span class="metric-label">Clean Code &amp; Architecture</span>
-          <p>Focusing on modular software design, efficient data structures, and intuitive user experiences.</p>
+          <span class="metric-num">0</span>
+          <span class="metric-label">UI Framework Bloat</span>
+          <p>Engineered with vanilla HTML5, CSS3, and modern ES6 JavaScript for maximum speed and zero dependencies.</p>
         </div>
       </div>
     </section>
@@ -283,11 +335,12 @@
       <p>Clean logic builds function.<br><em>Great typography earns memory.</em></p>
     </section>
 
+    <!-- About Section -->
     <section id="about" class="about">
       <div class="section-head"><span>03 — ABOUT</span><span>ENGINEER &amp; VISUAL THINKER</span></div>
       <div class="about-grid">
         <div class="portrait-frame">
-          <img src="profile.jpg" alt="Mahendra Pratap" class="portrait-img">
+          <img src="profile.jpg" alt="Mahendra Pratap portrait" class="portrait-img" width="300" height="360" loading="lazy">
           <div class="portrait-tag">MAHENDRA PRATAP ®</div>
         </div>
         <div>
@@ -298,15 +351,13 @@
             Python, C++, React, and Machine Learning models. My engineering workflow moves from algorithmic analysis to
             responsive web execution.</p>
           <div class="skills">
-            <span>Python</span><span>C /
-              C++</span><span>TypeScript</span><span>JavaScript</span><span>SQL</span><span>React</span><span>AI /
-              ML</span><span>LLM Architecture</span><span>AI Agents</span><span>Generative AI</span><span>Data Structures</span><span>System
-              Design</span><span>Firebase</span><span>Git &amp; GitHub</span>
+            <span>Python</span><span>C / C++</span><span>TypeScript</span><span>JavaScript</span><span>SQL</span><span>React</span><span>AI / ML</span><span>LLM Architecture</span><span>AI Agents</span><span>Generative AI</span><span>Data Structures</span><span>System Design</span><span>Firebase</span><span>Git &amp; GitHub</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Certifications Section -->
     <section id="certifications" class="certifications-section">
       <div class="section-head"><span>04 — CERTIFICATIONS &amp; CREDENTIALS</span><span>PROFESSIONAL LEARNING</span></div>
       <div class="cert-grid">
@@ -343,10 +394,11 @@
       </div>
     </section>
 
-    <section class="marquee">
+    <section class="marquee" aria-hidden="true">
       <div>BUILD — LEARN — SHIP — MEMORA — AI AGENTS — OPEN SOURCE — AI &amp; ML — FULL STACK — </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact" class="contact">
       <div class="section-head"><span>05 — CONTACT</span><span>LET'S CONNECT</span></div>
       <h2>Have a project<br><em>or opportunity?</em></h2>
@@ -355,8 +407,8 @@
         <a class="email magnetic" href="mailto:mp498343@gmail.com">mp498343@gmail.com ↗</a>
         <div class="contact-actions">
           <a class="resume-download-btn magnetic" href="Mahendra_Pratap_Resume.pdf"
-            download="Mahendra_Pratap_Resume.pdf" target="_blank">📄 Download Resume PDF ↗</a>
-          <button class="copy-btn magnetic" id="copyEmailBtn">📋 Copy Email</button>
+            download="Mahendra_Pratap_Resume.pdf" target="_blank">Download Resume (PDF) ↗</a>
+          <button class="copy-btn magnetic" id="copyEmailBtn">Copy Email</button>
           <a class="linkedin-btn magnetic" href="https://www.linkedin.com/in/mahendra-pratap-601003288" target="_blank"
             rel="noopener noreferrer">LinkedIn Profile ↗</a>
         </div>
@@ -375,8 +427,8 @@
     </section>
   </main>
 
-  <!-- Project Modal Drawer -->
-  <div class="modal" id="projectModal" aria-hidden="true">
+  <!-- Project Modal Drawer (Accessible Dialog) -->
+  <div class="modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-overlay" id="modalOverlay"></div>
     <div class="modal-container">
       <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
@@ -396,834 +448,31 @@
       </div>
       <div class="modal-footer">
         <a id="modalLiveBtn" href="#" target="_blank" rel="noopener noreferrer" class="modal-btn primary" style="display: none;">Live Demo ↗</a>
-        <a id="modalRepoBtn" href="#" target="_blank" rel="noopener noreferrer" class="modal-btn primary">View GitHub
-          Repository ↗</a>
+        <a id="modalRepoBtn" href="#" target="_blank" rel="noopener noreferrer" class="modal-btn primary">View GitHub Repository ↗</a>
         <button class="modal-btn secondary" id="modalCloseBtn">Close Preview</button>
       </div>
     </div>
   </div>
 
   <!-- Toast Notification -->
-  <div class="toast" id="toast">Link copied to clipboard!</div>
+  <div class="toast" id="toast" role="status" aria-live="polite">Link copied to clipboard!</div>
 
   <!-- Interactive Multiplayer Sticky Notes Layer & Dock -->
-  <div id="stickyNotesLayer" class="sn-notes-layer"></div>
+  <div id="stickyNotesLayer" class="sn-notes-layer" aria-hidden="true"></div>
   <div class="sn-dock" id="snDock">
     <button id="snTrigger" class="sn-trigger magnetic" aria-label="Leave a sticky note">
-      <span class="sn-trigger-icon">📝</span>
+      <span class="sn-trigger-icon" aria-hidden="true">📝</span>
       <span class="sn-trigger-text">Leave a note</span>
     </button>
     <button id="snBoxTrigger" class="sn-box-btn magnetic" aria-label="Toggle notes box" title="Click to scatter notes across portfolio">
-      <span class="sn-box-icon">📦</span>
+      <span class="sn-box-icon" aria-hidden="true">📦</span>
       <span class="sn-box-text" id="snBoxText">Notes Box</span>
       <span class="sn-box-count" id="snBoxCount">0</span>
     </button>
   </div>
 
-  <script src="script.js?v=2"></script>
-
-  <!-- Firebase Realtime Database: Live Views, Reactions & Sticky Notes -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
-    import { getDatabase, ref, onValue, runTransaction, push, update, remove, set } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: atob("QUl6YVN5Q00wZGtkMDNFNzNhTFdHck10dDN4dFNyRHJhNFBtX2VB"),
-      authDomain: "mahendra-portfolio-436ce.firebaseapp.com",
-      databaseURL: "https://mahendra-portfolio-436ce-default-rtdb.firebaseio.com",
-      projectId: "mahendra-portfolio-436ce",
-      storageBucket: "mahendra-portfolio-436ce.firebasestorage.app",
-      messagingSenderId: "590050555393",
-      appId: "1:590050555393:web:c307841645de948053f200",
-      measurementId: "G-5CME5TQGTB"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getDatabase(app);
-
-    // ==========================================================================
-    // 1. Header View Counter (Realtime Sync, Fallbacks & Deduplication)
-    // ==========================================================================
-    const BASE_VIEWS = 1500;
-
-    const viewCountEl = document.getElementById('viewCount')
-      || document.getElementById('page-views')
-      || document.querySelector('.view-count')
-      || document.querySelector('.view-counter-num');
-
-    // Helper to calculate displayed views starting after 1500
-    const calculateDisplayViews = (raw) => {
-      const num = (raw !== null && raw !== undefined) ? Number(raw) : 0;
-      return num >= BASE_VIEWS ? num : (BASE_VIEWS + num);
-    };
-
-    // Immediate cached display to prevent layout shifts or stuck placeholder
-    const cachedTotal = localStorage.getItem('portfolio_views_total');
-    if (viewCountEl) {
-      if (cachedTotal && Number(cachedTotal) >= BASE_VIEWS) {
-        viewCountEl.textContent = Number(cachedTotal).toLocaleString();
-      } else {
-        viewCountEl.textContent = Number(BASE_VIEWS).toLocaleString();
-      }
-    }
-
-    const totalViewsRef = ref(db, 'portfolio/views/total');
-    let hasReceivedViews = false;
-
-    // Real-time live sync across all connected clients
-    onValue(totalViewsRef, (snapshot) => {
-      hasReceivedViews = true;
-      const count = calculateDisplayViews(snapshot.val());
-      if (viewCountEl) {
-        viewCountEl.textContent = count.toLocaleString();
-      }
-      localStorage.setItem('portfolio_views_total', String(count));
-    }, (err) => {
-      hasReceivedViews = true;
-      console.warn('Firebase RTDB views listener notice (check database security rules):', err.message || err);
-      if (viewCountEl) {
-        const fallback = localStorage.getItem('portfolio_views_total') || String(BASE_VIEWS + 1);
-        viewCountEl.textContent = Number(fallback).toLocaleString();
-      }
-    });
-
-    // Offline / latency safeguard: ensure counter never stays stuck or < 1500
-    setTimeout(() => {
-      if (!hasReceivedViews && viewCountEl && (!viewCountEl.textContent || viewCountEl.textContent === '...' || Number(viewCountEl.textContent.replace(/,/g, '')) < BASE_VIEWS)) {
-        const fallback = localStorage.getItem('portfolio_views_total') || String(BASE_VIEWS + 1);
-        viewCountEl.textContent = Number(fallback).toLocaleString();
-      }
-    }, 2500);
-
-    // Initial visit check per session
-    const hasViewed = sessionStorage.getItem('has_viewed_site');
-
-    if (!hasViewed) {
-      sessionStorage.setItem('has_viewed_site', 'true');
-
-      // Atomic increment on initial session visit (works on localhost & production)
-      runTransaction(totalViewsRef, (current) => {
-        if (!current || current < BASE_VIEWS) {
-          return BASE_VIEWS + 1;
-        }
-        return current + 1;
-      }).catch(err => console.warn('Firebase total views transaction notice:', err.message || err));
-
-      // Check LinkedIn Referrer
-      const referrer = (document.referrer || '').toLowerCase();
-      const urlParams = new URLSearchParams(window.location.search);
-      const isLinkedIn = (
-        referrer.includes('linkedin.com') ||
-        referrer.includes('lnkd.in') ||
-        urlParams.get('ref') === 'linkedin'
-      );
-
-      if (isLinkedIn) {
-        const linkedinViewsRef = ref(db, 'portfolio/views/linkedin');
-        runTransaction(linkedinViewsRef, (current) => (current || 0) + 1)
-          .catch(err => console.warn('Firebase LinkedIn views transaction notice:', err.message || err));
-      }
-    }
-
-    // ==========================================================================
-    // 2. Project Reaction Pills (🔥 Fire & 🚀 Rocket) starting after 500
-    // ==========================================================================
-    const PROJECT_BASE_REACTIONS = {
-      'ghumo-ai': { fire: 538, rocket: 519 },
-      'trackly': { fire: 526, rocket: 542 },
-      'college-practical-codes': { fire: 515, rocket: 508 },
-      'memora': { fire: 574, rocket: 561 },
-      'boundless-canvas': { fire: 582, rocket: 567 },
-      'airqr': { fire: 589, rocket: 578 }
-    };
-
-    const getBaseReaction = (project, type) => {
-      if (PROJECT_BASE_REACTIONS[project] && PROJECT_BASE_REACTIONS[project][type]) {
-        return PROJECT_BASE_REACTIONS[project][type];
-      }
-      let hash = 0;
-      const str = `${project}_${type}`;
-      for (let i = 0; i < str.length; i++) {
-        hash = ((hash << 5) - hash) + str.charCodeAt(i);
-        hash |= 0;
-      }
-      return 500 + Math.abs(hash % 85) + 5;
-    };
-
-    const calculateDisplayReaction = (project, type, raw) => {
-      const base = getBaseReaction(project, type);
-      const num = (raw !== null && raw !== undefined) ? Number(raw) : 0;
-      return num >= base ? num : (base + num);
-    };
-
-    const spawnEmojiParticle = (emoji, x, y) => {
-      const particle = document.createElement('span');
-      particle.className = 'floating-emoji-particle';
-      particle.textContent = emoji;
-      const drift = (Math.random() * 40 - 20).toFixed(1) + 'px';
-      particle.style.setProperty('--drift', drift);
-      particle.style.left = `${x}px`;
-      particle.style.top = `${y}px`;
-      document.body.appendChild(particle);
-      particle.addEventListener('animationend', () => particle.remove());
-      setTimeout(() => particle.remove(), 1200);
-    };
-
-    // Support query param ?reset_votes=1 to reset voted state for testing
-    if (new URLSearchParams(window.location.search).has('reset_votes')) {
-      Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('reacted_')) localStorage.removeItem(key);
-      });
-    }
-
-    const reactionPills = document.querySelectorAll('.reaction-pill');
-    reactionPills.forEach(pill => {
-      const project = pill.getAttribute('data-project');
-      const type = pill.getAttribute('data-type');
-      if (!project || !type) return;
-
-      const emojiSpan = pill.querySelector('.reaction-emoji');
-      const countSpan = pill.querySelector('.reaction-count');
-      const voteKey = `reacted_${project}_${type}`;
-      const reactionRef = ref(db, `portfolio/reactions/${project}/${type}`);
-      const baseCount = getBaseReaction(project, type);
-
-      // Restore device voted state
-      if (localStorage.getItem(voteKey) === 'true') {
-        pill.classList.add('voted');
-      }
-
-      // Restore cached count if available, or initialize with baseline
-      const cachedCount = localStorage.getItem(`cached_${project}_${type}`);
-      if (countSpan) {
-        if (cachedCount && Number(cachedCount) >= baseCount) {
-          countSpan.textContent = Number(cachedCount).toLocaleString();
-        } else {
-          countSpan.textContent = Number(baseCount).toLocaleString();
-        }
-      }
-
-      // Live real-time sync across all open browsers
-      onValue(reactionRef, (snapshot) => {
-        const count = calculateDisplayReaction(project, type, snapshot.val());
-        if (countSpan) {
-          countSpan.textContent = count.toLocaleString();
-        }
-        localStorage.setItem(`cached_${project}_${type}`, String(count));
-      }, (err) => {
-        console.warn(`Firebase reaction listener notice (${project}/${type}):`, err.message || err);
-        if (countSpan && (!countSpan.textContent || countSpan.textContent === '...')) {
-          const cached = localStorage.getItem(`cached_${project}_${type}`) || String(baseCount);
-          countSpan.textContent = Number(cached).toLocaleString();
-        }
-      });
-
-      // Handle tactile micro-interaction & transaction increment
-      pill.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const emoji = emojiSpan?.textContent.trim() || (type === 'fire' ? '🔥' : '🚀');
-        const rect = pill.getBoundingClientRect();
-        const clickX = e.clientX && e.clientX > 0 ? e.clientX : (rect.left + rect.width / 2);
-        const clickY = e.clientY && e.clientY > 0 ? e.clientY : (rect.top + rect.height / 2);
-
-        // Tactile button bounce & floating particle animation
-        pill.classList.remove('pop');
-        void pill.offsetWidth;
-        pill.classList.add('pop');
-        spawnEmojiParticle(emoji, clickX, clickY);
-
-        // Suppress duplicate database writes if already voted
-        if (localStorage.getItem(voteKey) === 'true') {
-          return;
-        }
-
-        // Set voted state immediately
-        localStorage.setItem(voteKey, 'true');
-        pill.classList.add('voted');
-
-        // Optimistically increment display
-        const currentNum = parseInt(countSpan?.textContent.replace(/,/g, ''), 10) || baseCount;
-        const newCount = currentNum + 1;
-        if (countSpan) {
-          countSpan.textContent = newCount.toLocaleString();
-        }
-        localStorage.setItem(`cached_${project}_${type}`, String(newCount));
-
-        // Increment in Firebase Realtime Database
-        runTransaction(reactionRef, (current) => {
-          if (!current || current < baseCount) {
-            return baseCount + 1;
-          }
-          return current + 1;
-        }).catch(err => console.warn(`Firebase reaction transaction error (${project}/${type}):`, err.message || err));
-      });
-    });
-
-    // ==========================================================================
-    // 3. Draggable Sticky Notes Canvas (Multiplayer System & Notes Box)
-    // ==========================================================================
-    const notesRef = ref(db, 'portfolio/notes');
-    const stickyNotesLayer = document.getElementById('stickyNotesLayer');
-    const snTrigger = document.getElementById('snTrigger');
-    const snBoxTrigger = document.getElementById('snBoxTrigger');
-    const snBoxText = document.getElementById('snBoxText');
-    const snBoxCount = document.getElementById('snBoxCount');
-    const toastEl = document.getElementById('toast');
-
-    let isPlacementMode = false;
-    let areNotesScattered = false; // Notes start inside note box as number by default
-    let activeDraftEl = null;
-    let snPlacementBanner = null;
-    let toastTimer = null;
-
-    // Active in-memory registry of notes (noteId -> data)
-    const activeNotes = new Map();
-
-    // Dynamically synchronize the sticky notes canvas layer to full document scrollHeight
-    const syncLayerHeight = () => {
-      if (!stickyNotesLayer) return;
-      const docHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.offsetHeight,
-        document.body.clientHeight,
-        document.documentElement.clientHeight
-      );
-      stickyNotesLayer.style.height = `${docHeight}px`;
-    };
-    syncLayerHeight();
-    window.addEventListener('load', syncLayerHeight);
-    window.addEventListener('resize', syncLayerHeight);
-    if (window.ResizeObserver) {
-      const ro = new ResizeObserver(() => syncLayerHeight());
-      ro.observe(document.body);
-    }
-
-    const showSnToast = (msg) => {
-      if (!toastEl) return;
-      toastEl.textContent = msg;
-      toastEl.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
-    };
-
-    // Filter helper to ensure strictly genuine visitor notes (purge mock/test data)
-    const isFakeNote = (id, data) => {
-      if (!data || typeof data !== 'object') return true;
-      if (typeof id === 'string' && (id.startsWith('note_seed_') || id.startsWith('note_hero_') || id.startsWith('note_ghumo_') || id.startsWith('note_trackly_') || id.startsWith('note_memora_') || id.startsWith('note_contact_'))) {
-        return true;
-      }
-      const text = (data.text || '').trim();
-      const author = (data.author || '').trim();
-      return (
-        text === 'Great hero presentation and aesthetic!' ||
-        text === 'Loving the Trackly mobile UI demo!' ||
-        text === 'Memora multimodal agent architecture is brilliant!' ||
-        author === 'Alex Designer' ||
-        author === 'AI Engineer' ||
-        author === 'Recruiter / Dev'
-      );
-    };
-
-    // Local storage caching for genuine user notes only
-    const getCachedNotes = () => {
-      try {
-        const stored = JSON.parse(localStorage.getItem('portfolio_notes_cache') || '{}');
-        if (stored && typeof stored === 'object') {
-          const genuine = {};
-          Object.entries(stored).forEach(([k, v]) => {
-            if (!isFakeNote(k, v)) {
-              genuine[k] = v;
-            }
-          });
-          return genuine;
-        }
-      } catch (e) {}
-      return {};
-    };
-
-    const setCachedNotes = (notesObj) => {
-      try {
-        localStorage.setItem('portfolio_notes_cache', JSON.stringify(notesObj));
-      } catch (e) {}
-    };
-
-    // Auto-purge any stale fake notes from localStorage on startup
-    try {
-      localStorage.setItem('portfolio_notes_cache', JSON.stringify(getCachedNotes()));
-    } catch (e) {}
-
-    const updateCachedNote = (noteId, noteData) => {
-      const cache = getCachedNotes();
-      if (noteData) {
-        cache[noteId] = noteData;
-      } else {
-        delete cache[noteId];
-      }
-      setCachedNotes(cache);
-    };
-
-    const formatRelativeTime = (timestamp) => {
-      if (!timestamp) return 'just now';
-      const diffSec = Math.floor((Date.now() - timestamp) / 1000);
-      if (diffSec < 45) return 'just now';
-      const diffMin = Math.floor(diffSec / 60);
-      if (diffMin < 60) return `${diffMin}m ago`;
-      const diffHr = Math.floor(diffMin / 60);
-      if (diffHr < 24) return `${diffHr}h ago`;
-      const diffDays = Math.floor(diffHr / 24);
-      return `${diffDays}d ago`;
-    };
-
-    const NOTE_COLORS = [
-      '#e6ff3f', // signature neon lime
-      '#facc15', // warm yellow
-      '#38bdf8', // electric cyan
-      '#f472b6', // neon magenta
-      '#4ade80'  // emerald green
-    ];
-
-    // Update Notes Box button counter and toggle state
-    const updateNotesBoxUI = () => {
-      const count = activeNotes.size;
-      if (snBoxCount) snBoxCount.textContent = count;
-      if (snBoxText) {
-        snBoxText.textContent = areNotesScattered ? 'Gather Notes' : 'Notes Box';
-      }
-      if (snBoxTrigger) {
-        snBoxTrigger.classList.toggle('is-active', areNotesScattered);
-        snBoxTrigger.setAttribute(
-          'title',
-          areNotesScattered ? 'Click to gather notes back into box' : 'Click to scatter notes across portfolio'
-        );
-      }
-    };
-
-    // Toggle Notes Scatter:
-    // Notes start inside the note box represented as a number.
-    // Clicking the note box scatters all notes onto the canvas at once,
-    // and clicking again gathers them all back into the note box at once (and vice-versa).
-    const toggleNotesScatter = (forceState) => {
-      if (activeNotes.size === 0 && forceState !== false) {
-        showSnToast('No notes in box yet! Click "Leave a note" to pin one.');
-        return;
-      }
-
-      const nextState = (typeof forceState === 'boolean') ? forceState : !areNotesScattered;
-      areNotesScattered = nextState;
-
-      if (stickyNotesLayer) {
-        const cards = stickyNotesLayer.querySelectorAll('.sn-card');
-        cards.forEach((card) => {
-          if (areNotesScattered) {
-            card.classList.remove('is-gathered');
-          } else {
-            card.classList.add('is-gathered');
-          }
-        });
-      }
-
-      updateNotesBoxUI();
-
-      if (areNotesScattered) {
-        showSnToast(`Scattered ${activeNotes.size} note${activeNotes.size === 1 ? '' : 's'} across portfolio! ✨`);
-      } else {
-        showSnToast('All notes gathered into box! 📦');
-      }
-    };
-
-    // Toggle Placement Mode
-    const setPlacementMode = (active) => {
-      isPlacementMode = active;
-      if (activeDraftEl) {
-        activeDraftEl.remove();
-        activeDraftEl = null;
-      }
-
-      document.body.classList.toggle('sn-placement-active', isPlacementMode);
-      if (snTrigger) {
-        snTrigger.classList.toggle('is-active', isPlacementMode);
-        const icon = snTrigger.querySelector('.sn-trigger-icon');
-        const text = snTrigger.querySelector('.sn-trigger-text');
-        if (icon) icon.textContent = isPlacementMode ? '✕' : '📝';
-        if (text) text.textContent = isPlacementMode ? 'Cancel' : 'Leave a note';
-      }
-
-      if (isPlacementMode) {
-        if (!snPlacementBanner) {
-          snPlacementBanner = document.createElement('div');
-          snPlacementBanner.id = 'snPlacementBanner';
-          snPlacementBanner.className = 'sn-placement-banner';
-          snPlacementBanner.textContent = 'Click anywhere on canvas to place note';
-          document.body.appendChild(snPlacementBanner);
-        }
-      } else if (snPlacementBanner) {
-        snPlacementBanner.remove();
-        snPlacementBanner = null;
-      }
-    };
-
-    if (snTrigger) {
-      snTrigger.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setPlacementMode(!isPlacementMode);
-      });
-    }
-
-    if (snBoxTrigger) {
-      snBoxTrigger.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleNotesScatter();
-      });
-    }
-
-    // Cancel on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (isPlacementMode) {
-          setPlacementMode(false);
-        } else if (activeDraftEl) {
-          activeDraftEl.remove();
-          activeDraftEl = null;
-        }
-      }
-    });
-
-    // Spawn Draft Note Card anywhere on full document
-    const spawnDraftCard = (xPercent, yAbsolute) => {
-      if (activeDraftEl) {
-        activeDraftEl.remove();
-        activeDraftEl = null;
-      }
-
-      syncLayerHeight();
-      const docWidth = document.documentElement.clientWidth;
-      const draftWidth = Math.min(270, docWidth - 32);
-      const leftPx = Math.max(16, Math.min(docWidth - draftWidth - 16, (xPercent / 100) * docWidth));
-
-      let selectedColor = NOTE_COLORS[0];
-
-      const draftCard = document.createElement('div');
-      draftCard.className = 'sn-draft-card';
-      draftCard.style.left = `${leftPx}px`;
-      draftCard.style.top = `${Math.max(80, yAbsolute - 30)}px`;
-
-      draftCard.innerHTML = `
-        <div class="sn-draft-header">
-          <span>Leave a sticky note</span>
-          <button class="sn-card-delete" id="snDraftClose" aria-label="Close draft">✕</button>
-        </div>
-        <textarea class="sn-draft-textarea" id="snDraftText" maxlength="140" placeholder="Leave a thought, critique, or hello..."></textarea>
-        <div class="sn-draft-char-count"><span id="snCharCount">0</span>/140</div>
-        <input type="text" class="sn-draft-input" id="snDraftAuthor" maxlength="30" placeholder="Your name or @handle (optional)" />
-        <div class="sn-draft-colors">
-          ${NOTE_COLORS.map(c => `
-            <div class="sn-color-swatch ${c === selectedColor ? 'is-selected' : ''}" data-color="${c}" style="background: ${c};"></div>
-          `).join('')}
-        </div>
-        <div class="sn-draft-actions">
-          <button class="sn-btn-pin" id="snBtnPin">Pin Note</button>
-          <button class="sn-btn-cancel" id="snBtnCancel">Discard</button>
-        </div>
-      `;
-
-      draftCard.addEventListener('click', e => e.stopPropagation());
-      draftCard.addEventListener('pointerdown', e => e.stopPropagation());
-
-      stickyNotesLayer.appendChild(draftCard);
-      activeDraftEl = draftCard;
-
-      const textarea = draftCard.querySelector('#snDraftText');
-      const charCountEl = draftCard.querySelector('#snCharCount');
-      const authorInput = draftCard.querySelector('#snDraftAuthor');
-      const btnPin = draftCard.querySelector('#snBtnPin');
-      const btnCancel = draftCard.querySelector('#snBtnCancel');
-      const btnClose = draftCard.querySelector('#snDraftClose');
-      const swatches = draftCard.querySelectorAll('.sn-color-swatch');
-
-      setTimeout(() => textarea && textarea.focus(), 50);
-
-      textarea.addEventListener('input', () => {
-        if (charCountEl) charCountEl.textContent = textarea.value.length;
-      });
-
-      swatches.forEach(swatch => {
-        swatch.addEventListener('click', (e) => {
-          e.stopPropagation();
-          swatches.forEach(s => s.classList.remove('is-selected'));
-          swatch.classList.add('is-selected');
-          selectedColor = swatch.getAttribute('data-color');
-        });
-      });
-
-      const closeDraft = () => {
-        draftCard.remove();
-        if (activeDraftEl === draftCard) activeDraftEl = null;
-      };
-
-      btnCancel.addEventListener('click', closeDraft);
-      btnClose.addEventListener('click', closeDraft);
-
-      // Submit / Pin Note
-      btnPin.addEventListener('click', () => {
-        const text = textarea.value.trim();
-        if (!text) {
-          textarea.style.borderColor = '#ef4444';
-          textarea.focus();
-          return;
-        }
-
-        const author = authorInput.value.trim() || 'Anonymous';
-        const finalXPercent = parseFloat(((leftPx / docWidth) * 100).toFixed(2));
-        const finalYAbsolute = Math.round(yAbsolute);
-
-        const noteData = {
-          text,
-          author,
-          xPercent: finalXPercent,
-          yAbsolute: finalYAbsolute,
-          timestamp: Date.now(),
-          color: selectedColor
-        };
-
-        const newNoteRef = push(notesRef);
-        const noteId = newNoteRef.key || `local_${Date.now()}`;
-        closeDraft();
-
-        // Save locally and update in-memory
-        activeNotes.set(noteId, noteData);
-        updateCachedNote(noteId, noteData);
-
-        // Scatter notes so the newly pinned note is visible on canvas
-        areNotesScattered = true;
-        if (stickyNotesLayer) {
-          const cards = stickyNotesLayer.querySelectorAll('.sn-card');
-          cards.forEach(c => c.classList.remove('is-gathered'));
-        }
-
-        // Optimistically render note immediately on canvas
-        renderNote(noteId, noteData);
-        updateNotesBoxUI();
-        showSnToast('Note permanently pinned to canvas! 📌');
-
-        // Persist to Firebase RTDB
-        set(newNoteRef, noteData).catch(err => {
-          console.warn('Firebase note save notice:', err.message || err);
-        });
-      });
-    };
-
-    // Full-document canvas click interceptor for Placement Mode
-    document.addEventListener('click', (e) => {
-      if (!isPlacementMode) return;
-      if (e.target.closest('#snDock') || e.target.closest('.sn-draft-card')) return;
-
-      e.preventDefault();
-      e.stopPropagation();
-
-      const docWidth = document.documentElement.clientWidth;
-      const xPercent = (e.pageX / docWidth) * 100;
-      const yAbsolute = e.pageY; // Document-absolute coordinate across any scroll height
-
-      setPlacementMode(false);
-      spawnDraftCard(xPercent, yAbsolute);
-    }, true);
-
-    // Render & Bind Draggable Note Card (Permanent: no delete / cut option)
-    const renderNote = (noteId, data) => {
-      if (!stickyNotesLayer || !data) return;
-
-      syncLayerHeight();
-      let card = stickyNotesLayer.querySelector(`.sn-card[data-note-id="${noteId}"]`);
-
-      if (!card) {
-        card = document.createElement('div');
-        card.className = 'sn-card';
-        card.setAttribute('data-note-id', noteId);
-        if (!areNotesScattered) card.classList.add('is-gathered');
-        stickyNotesLayer.appendChild(card);
-      } else {
-        if (!areNotesScattered) {
-          card.classList.add('is-gathered');
-        } else {
-          card.classList.remove('is-gathered');
-        }
-      }
-
-      const docWidth = document.documentElement.clientWidth;
-      const cardWidth = Math.min(230, docWidth - 30);
-      const leftPx = Math.max(12, Math.min(docWidth - cardWidth - 12, (data.xPercent / 100) * docWidth));
-
-      // Do not jerk coordinates if currently being dragged or gathered
-      if (!card.classList.contains('is-dragging') && !card.classList.contains('is-gathered')) {
-        card.style.left = `${leftPx}px`;
-        card.style.top = `${data.yAbsolute}px`;
-      }
-
-      const safeText = document.createElement('div');
-      safeText.textContent = data.text || '';
-      const safeAuthor = document.createElement('div');
-      safeAuthor.textContent = data.author || 'Anonymous';
-
-      card.innerHTML = `
-        <div class="sn-card-accent" style="background: ${data.color || '#e6ff3f'};"></div>
-        <div class="sn-card-header">
-          <div class="sn-card-grip" title="Drag note">
-            <span></span><span></span><span></span>
-          </div>
-          <span class="sn-card-pin-badge" title="Permanently pinned note">📌</span>
-        </div>
-        <div class="sn-card-body">${safeText.innerHTML}</div>
-        <div class="sn-card-footer">
-          <span class="sn-card-author">${safeAuthor.innerHTML}</span>
-          <span class="sn-card-time">${formatRelativeTime(data.timestamp)}</span>
-        </div>
-      `;
-
-      // Pointer events dragging mechanics with 60fps physics
-      if (!card.dataset.dragBound) {
-        card.dataset.dragBound = 'true';
-
-        let isDragging = false;
-        let startX = 0, startY = 0;
-        let origX = 0, origY = 0;
-        let curX = 0, curY = 0;
-
-        card.addEventListener('pointerdown', (e) => {
-          if (e.button !== 0) return; // Left-click only
-          if (card.classList.contains('is-gathered')) return;
-
-          card.setPointerCapture(e.pointerId);
-          isDragging = true;
-          startX = e.clientX;
-          startY = e.clientY;
-          origX = parseFloat(card.style.left) || leftPx;
-          origY = parseFloat(card.style.top) || data.yAbsolute;
-          curX = origX;
-          curY = origY;
-          card.classList.add('is-dragging');
-        });
-
-        card.addEventListener('pointermove', (e) => {
-          if (!isDragging) return;
-          const dx = e.clientX - startX;
-          const dy = e.clientY - startY;
-
-          const currentDocWidth = document.documentElement.clientWidth;
-          const currentDocHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-          const cWidth = card.offsetWidth || 230;
-          const cHeight = card.offsetHeight || 100;
-
-          curX = Math.max(10, Math.min(currentDocWidth - cWidth - 10, origX + dx));
-          curY = Math.max(65, Math.min(currentDocHeight - cHeight - 20, origY + dy));
-
-          card.style.left = `${curX}px`;
-          card.style.top = `${curY}px`;
-        });
-
-        const handlePointerUp = (e) => {
-          if (!isDragging) return;
-          isDragging = false;
-          card.classList.remove('is-dragging');
-          try { card.releasePointerCapture(e.pointerId); } catch (err) {}
-
-          const currentDocWidth = document.documentElement.clientWidth;
-          const newXPercent = parseFloat(((curX / currentDocWidth) * 100).toFixed(2));
-          const newYAbsolute = Math.round(curY);
-
-          // Update in-memory & local cache
-          data.xPercent = newXPercent;
-          data.yAbsolute = newYAbsolute;
-          activeNotes.set(noteId, data);
-          updateCachedNote(noteId, data);
-
-          // Persist updated position to Firebase RTDB
-          update(ref(db, `portfolio/notes/${noteId}`), {
-            xPercent: newXPercent,
-            yAbsolute: newYAbsolute
-          }).catch(err => console.warn('Firebase position update notice:', err.message || err));
-        };
-
-        card.addEventListener('pointerup', handlePointerUp);
-        card.addEventListener('pointercancel', handlePointerUp);
-      }
-    };
-
-    // 1. Initial immediate hydration from local cache (strictly genuine notes)
-    const initialCached = getCachedNotes();
-    if (initialCached && typeof initialCached === 'object') {
-      Object.entries(initialCached).forEach(([id, item]) => {
-        if (item && typeof item === 'object') {
-          activeNotes.set(id, item);
-          renderNote(id, item);
-        }
-      });
-      updateNotesBoxUI();
-    }
-
-    // 2. Live Real-Time Synchronization Listener with Firebase
-    onValue(notesRef, (snapshot) => {
-      const notesData = snapshot.val();
-      const liveIds = new Set();
-      if (notesData && typeof notesData === 'object') {
-        Object.entries(notesData).forEach(([id, item]) => {
-          // Purge any fake/seed test notes from Firebase so only genuine notes exist
-          if (isFakeNote(id, item)) {
-            remove(ref(db, `portfolio/notes/${id}`)).catch(() => {});
-            return;
-          }
-          if (item && typeof item === 'object') {
-            liveIds.add(id);
-            activeNotes.set(id, item);
-            updateCachedNote(id, item);
-            renderNote(id, item);
-          }
-        });
-      }
-
-      // Reconcile and clean removed or fake notes from canvas
-      if (stickyNotesLayer) {
-        stickyNotesLayer.querySelectorAll('.sn-card').forEach(c => {
-          const id = c.getAttribute('data-note-id');
-          if (id && !liveIds.has(id)) {
-            c.remove();
-            activeNotes.delete(id);
-            const cache = getCachedNotes();
-            delete cache[id];
-            setCachedNotes(cache);
-          }
-        });
-      }
-      updateNotesBoxUI();
-    }, (err) => {
-      console.warn('Firebase notes real-time listener notice (check rules):', err.message || err);
-    });
-
-    // Re-clamp note horizontal positions on window resize
-    let resizeTimer = null;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        if (!stickyNotesLayer) return;
-        const currentDocWidth = document.documentElement.clientWidth;
-        stickyNotesLayer.querySelectorAll('.sn-card').forEach(card => {
-          if (card.classList.contains('is-dragging') || card.classList.contains('is-gathered')) return;
-          const origLeft = parseFloat(card.style.left) || 0;
-          const cWidth = card.offsetWidth || 230;
-          const clamped = Math.max(10, Math.min(currentDocWidth - cWidth - 10, origLeft));
-          card.style.left = `${clamped}px`;
-        });
-      }, 100);
-    });
-  </script>
+  <!-- Modular Application Script -->
+  <script type="module" src="js/app.js"></script>
 </body>
 
 </html>
