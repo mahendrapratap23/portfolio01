@@ -44,14 +44,20 @@
 
 ---
 
-## 🎓 Industry Certifications
+## 🎓 Industry Certifications & Credentials
 
-- 🏅 **Oracle Cloud Infrastructure 2025 AI Foundations Associate** (Oracle)
-- 🏅 **IBM Artificial Intelligence Fundamentals** (IBM)
-- 🏅 **Cisco CCNA & Cloud Networking** (Cisco Networking Academy)
-- 🏅 **Problem Solving Using Computational Thinking** (University of Michigan)
-- 🏅 **Data Analyst & Generative AI Credentials** (LinkedIn Learning)
-- 🏅 **Digital Electronics & Hardware Foundations** (NPTEL - IIT Kharagpur)
+- 🏅 **Microsoft Certified: Azure Fundamentals (AZ-900)** (Microsoft • Certiport `waGcp-Fa44`)
+- 🏅 **Google Build with AI Bootcamp** (Google for Developers & Hack2skill `2026H2S09BWAIBRKT-P00190`)
+- 🏅 **IBM Artificial Intelligence Fundamentals** (IBM SkillsBuild • Credly `d55ee983-a9fd-4d07-bb4f-44e4e35a461d`)
+- 🏅 **Applied Machine Learning & AI Foundation** (CII • INDIAai • HP • MeitY `23CII-FJ26-69647`)
+- 🏅 **Database Programming with SQL** (Oracle Academy • Marwadi University)
+- 🏅 **Java Foundations** (Oracle Academy • Marwadi University)
+- 🏅 **Linux Essentials** (Cisco Networking Academy & NDG)
+- 🏅 **Python Essentials 1** (Cisco Networking Academy & OpenEDG Python Institute)
+- 🏅 **Digital Electronic Circuits** (NPTEL - IIT Kharagpur • MoE Govt. of India `NPTEL25EE20S755501011`)
+- 🏅 **Design Thinking** (Infosys Springboard `verify.onwingspan.com`)
+- 🏅 **Designing the Future of Work** (UNSW Sydney • Coursera `Z7WIL9DHVS0M`)
+- 🏅 **Marwadi University x GeeksforGeeks Contest** (Department of AI, ML & Big Data)
 
 ---
 
