@@ -1,6 +1,7 @@
 import { initModal } from "./modal.js";
 import { initViewsCounter } from "./views-counter.js";
 import { initStickyNotes } from "./sticky-notes.js";
+import { initCertificates } from "./certificates.js";
 
 // Toast Notification Manager
 const toastEl = document.getElementById("toast");
@@ -69,7 +70,7 @@ const initCursor = () => {
 
   const bindCursorHover = () => {
     document
-      .querySelectorAll("a, button, .project, .skills span, .metric-card, .view-counter-badge")
+      .querySelectorAll("a, button, .project, .skills span, .metric-card, .view-counter-badge, .cert-card, .cert-filter-btn")
       .forEach((el) => {
         if (el.dataset.cursorBound) return;
         el.dataset.cursorBound = "true";
@@ -170,4 +171,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initModal();
   initViewsCounter();
   initStickyNotes(showToast);
+  initCertificates();
 });
